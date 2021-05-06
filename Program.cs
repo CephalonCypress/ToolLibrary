@@ -10,6 +10,8 @@ namespace ToolLibrary
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("yeet");
+            Console.ReadKey();
         }
     }
 }
