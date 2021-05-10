@@ -50,7 +50,6 @@ namespace ToolLibrary {
             {
                 if (user.Key.ToString() == username && user.Value.ToString() == password)
                 {
-                    Console.WriteLine("yeet");
                     return true;
                 }
             }
@@ -60,7 +59,6 @@ namespace ToolLibrary {
         public bool staffLogin(String username, String password) {
             if ("staff" == username && "today123" == password)
             {
-                Console.WriteLine("yeet");
                 return true;
             }
             return false;

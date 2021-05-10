@@ -64,15 +64,20 @@ namespace ToolLibrary {
             toolArray = ToolList.ToArray();
         }
 
-        public void increaseQuantityOfTool(Tool selectedTool, int quantity) {
+        public void increaseQuantity(Tool[] toolArray, Tool selectedTool, int quantity) {
             List<Tool> ToolList = new List<Tool>(toolArray);
             int index = ToolList.BinarySearch(selectedTool);
             selectedTool.Quantity += quantity;
-            ToolList[index] = new Tool(selectedTool.Category, selectedTool.Type, selectedTool.Name, selectedTool.Quantity + quantity);
+            ToolList[0] = new Tool(selectedTool.Category, selectedTool.Type, selectedTool.Name, selectedTool.Quantity);
+            toolArray = ToolList.ToArray();
         }
 
-        public void decreaseQuantityOfTool(Tool selectedTool, int quantity) {
+        public void decreaseQuantity(Tool[] toolArray, Tool selectedTool, int quantity) {
+            List<Tool> ToolList = new List<Tool>(toolArray);
+            int index = ToolList.BinarySearch(selectedTool);
             selectedTool.Quantity -= quantity;
+            ToolList[0] = new Tool(selectedTool.Category, selectedTool.Type, selectedTool.Name, selectedTool.Quantity);
+            toolArray = ToolList.ToArray();
         }
 
         public Tool[] getToolArray() {

@@ -5,33 +5,37 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ToolLibrary {
-    class ToolCollection : iToolCollection {
-        public int Number => throw new NotImplementedException();
-        public void add(iTool aTool) => throw new NotImplementedException();
-        public void delete(iTool aTool) => throw new NotImplementedException();
-        public bool search(iTool aTool) => throw new NotImplementedException();
-        public iTool[] toArray() => throw new NotImplementedException();
-
+    public class ToolCollection : iToolCollection {
         public Tool[] toolArray;
         Tool tool = new Tool();
-
 
         public ToolCollection() {
 
         }
 
-        public void listAllTools(Tool[] toolArray) {
-            //List<Tool> toolList = new List<Tool>(toolArray);
-            //toolList.ForEach(delegate(Tool ToolEntry)
-            //{
-            //    ToolEntry.Tool
-            //}
+        int iToolCollection.Number => throw new NotImplementedException();
 
-            //toolArray = tool.getToolArray();
+        public void listAllTools(Tool[] toolArray) {
             foreach (Tool tool in toolArray)
             {
                 Console.WriteLine(tool.Name + " " + tool.Category + " " + tool.Type + " " + tool.Quantity);
             }
+        }
+
+        void iToolCollection.add(iTool aTool) {
+            throw new NotImplementedException();
+        }
+
+        void iToolCollection.delete(iTool aTool) {
+            throw new NotImplementedException();
+        }
+
+        bool iToolCollection.search(iTool aTool) {
+            throw new NotImplementedException();
+        }
+
+        iTool[] iToolCollection.toArray() {
+            throw new NotImplementedException();
         }
     }
 }
