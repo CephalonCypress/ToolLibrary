@@ -56,7 +56,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ToolLibrary\ToolLibrary.csproj">
+    <ProjectReference Include="..\ToolLibrary.csproj">
       <Project>{eb97619b-47c3-4172-af5f-a4abad739cda}</Project>
       <Name>ToolLibrary</Name>
     </ProjectReference>
