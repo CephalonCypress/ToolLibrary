@@ -19,20 +19,31 @@ namespace ToolLibrary {
             Console.WriteLine("===========Main Menu===========");
             Console.WriteLine("1. Staff Login");
             Console.WriteLine("2. Member Login");
-            Console.WriteLine("3. Exit");
+            Console.WriteLine("0. Exit");
             Console.WriteLine("===============================\n");
             Console.WriteLine("Please make a selection (1-2, or 0 to exit):");
 
-            if (Console.ReadKey().KeyChar == '1')
+            if (Console.ReadKey().KeyChar == '1') // Staff Login
             {
                 Console.Clear();
-                Console.WriteLine("Enter staff login details please");
-                Console.Write("User: ");
+                Console.WriteLine("Enter staff login details");
+                Console.Write("Username: ");
                 String user = Console.ReadLine();
-                Console.Write("Pass: ");
+                Console.Write("Password: ");
                 String pass = Console.ReadLine();
 
                 member.staffLogin(user, pass);
+            } else if (Console.ReadKey().KeyChar == '2') // Member login
+            {
+                Console.Clear();
+                Console.WriteLine("Enter login details");
+                Console.Write("Username: ");
+                String user = Console.ReadLine();
+                Console.Write("Password: ");
+                String pass = Console.ReadLine();
+            } else
+            {
+
             }
 
             //STAFF MENU
