@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ToolLibrary {
-    public class Member : iMember {
+    public class Member : iMember, IComparable<Member> {
         //public string[] Tools => throw new NotImplementedException();
         //public string FirstName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         //public string LastName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

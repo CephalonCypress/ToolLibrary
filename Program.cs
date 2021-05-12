@@ -16,8 +16,10 @@ namespace ToolLibrary {
             ToolLibrarySystem TLS = new ToolLibrarySystem();
             IBSTree BSTree = memberCollection.getBST();
             Member currentMember;
+            Hashtable memberLoanHT;
+            Hashtable toolLoanHT;
 
-            memberCollection.registerMember("Fidel", "Seng", "0479147960", "1234");
+
 
             //MAIN MENU
             Console.WriteLine("Welcome to the Tool Library");
@@ -144,8 +146,8 @@ namespace ToolLibrary {
 
                         int selectedCategory = Console.ReadKey().KeyChar;
                         int selectedType;
-                        Tool.toolCategory selectedCategoryEnum = Tool.toolCategory.Gardening;
-                        Tool.toolType selectedTypeEnum = Tool.toolType.lineTrimmers;
+                        Tool.toolCategory selectedCategoryEnum = Tool.toolCategory.Automotive;
+                        Tool.toolType selectedTypeEnum = Tool.toolType.airCompressors;
 
                         Console.Clear();
                         switch (selectedCategory)
@@ -386,6 +388,11 @@ namespace ToolLibrary {
                         Tool desiredTool = new Tool(selectedCategoryEnum, selectedTypeEnum, 1);
                         TLS.borrowTool(currentMember, desiredTool);
                         Console.ReadKey();
+                    } else if (input == '3') //Returning a tool
+                    {
+                        Console.WriteLine("What tool would you like to return?");
+                        Console.Write("Category: ");
+                        Console.Write("Type: ");
                     }
                 }
             } else

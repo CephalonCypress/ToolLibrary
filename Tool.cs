@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace ToolLibrary {
-    public class Tool : iTool {
+    public class Tool : iTool, IComparable<string>, IComparable<Tool> {
         Hashtable toolHT = new Hashtable();
+
         private void toolCategoryTypeInitialiser()
         {
             toolHT.Add("Line Trimmer", "Gardening");
@@ -75,56 +76,56 @@ namespace ToolLibrary {
             set { category = value; }
         }
         public enum toolType {
-            lineTrimmers = toolCategory.Gardening,
-            lawnMowers = toolCategory.Gardening,
-            handTools = toolCategory.Gardening,
-            wheelbarrows = toolCategory.Gardening,
-            gardenPowerTools = toolCategory.Gardening,
-            scrapers = toolCategory.Flooring,
-            floorLasers = toolCategory.Flooring,
-            floorLevellingTools = toolCategory.Flooring,
-            floorLevellingMaterials = toolCategory.Flooring,
-            floorHandTools = toolCategory.Flooring,
-            tilingTools = toolCategory.Flooring,
-            fencingHandTools = toolCategory.Fencing,
-            electricFencing = toolCategory.Fencing,
-            steelFencingTools = toolCategory.Fencing,
-            powerTools = toolCategory.Fencing,
-            fencingAccessories = toolCategory.Fencing,
-            distanceTools = toolCategory.Measuring,
-            laserMeasurer = toolCategory.Measuring,
-            measuringJugs = toolCategory.Measuring,
-            temperatureHumidityTools = toolCategory.Measuring,
-            levelingTools = toolCategory.Measuring,
-            markers = toolCategory.Measuring,
-            draining = toolCategory.Cleaning,
-            carCleaning = toolCategory.Cleaning,
-            vacuum = toolCategory.Cleaning,
-            pressureCleaners = toolCategory.Cleaning,
-            poolCleaning = toolCategory.Cleaning,
-            floorCleaning = toolCategory.Cleaning,
-            sanding = toolCategory.Painting,
-            brushes = toolCategory.Painting,
-            rollers = toolCategory.Painting,
-            paintRemoval = toolCategory.Painting,
-            paintScrapers = toolCategory.Painting,
-            sprayers = toolCategory.Painting,
-            voltageTester = toolCategory.Electronic,
-            oscilloscopes = toolCategory.Electronic,
-            thermalImaging = toolCategory.Electronic,
-            dataTestTool = toolCategory.Electronic,
-            insulationTesters = toolCategory.Electronic,
-            testEquipment = toolCategory.Electricity,
-            safetyEquipment = toolCategory.Electricity,
-            basicHandTools = toolCategory.Electricity,
-            circuitProtection = toolCategory.Electricity,
-            cableTools = toolCategory.Electricity,
-            jacks = toolCategory.Automotive,
-            airCompressors = toolCategory.Automotive,
-            batteryChargers = toolCategory.Automotive,
-            socketTools = toolCategory.Automotive,
-            braking = toolCategory.Automotive,
-            drivetrain = toolCategory.Automotive
+            lineTrimmers,
+            lawnMowers,
+            handTools,
+            wheelbarrows,
+            gardenPowerTools,
+            scrapers,
+            floorLasers,
+            floorLevellingTools,
+            floorLevellingMaterials,
+            floorHandTools,
+            tilingTools,
+            fencingHandTools,
+            electricFencing,
+            steelFencingTools,
+            powerTools,
+            fencingAccessories,
+            distanceTools,
+            laserMeasurer,
+            measuringJugs,
+            temperatureHumidityTools,
+            levelingTools,
+            markers,
+            draining,
+            carCleaning,
+            vacuum,
+            pressureCleaners,
+            poolCleaning,
+            floorCleaning,
+            sanding,
+            brushes,
+            rollers,
+            paintRemoval,
+            paintScrapers,
+            sprayers,
+            voltageTester,
+            oscilloscopes,
+            thermalImaging,
+            dataTestTool,
+            insulationTesters,
+            testEquipment,
+            safetyEquipment,
+            basicHandTools,
+            circuitProtection,
+            cableTools,
+            jacks,
+            airCompressors,
+            batteryChargers,
+            socketTools,
+            braking,
+            drivetrain
         }
         private toolType type;
         public toolType Type {
@@ -148,7 +149,6 @@ namespace ToolLibrary {
             this.Type = toolType;
             this.Name = name;
             this.Quantity = quantity;
-            toolCategoryTypeInitialiser();
         }
 
         public Tool(toolCategory category, toolType toolType, int quantity)
@@ -164,6 +164,7 @@ namespace ToolLibrary {
         }
         public Tool() {
             toolCategoryTypeInitialiser();
+
         }
 
         void iTool.addBorrower(iMember aMember) {
@@ -175,6 +176,23 @@ namespace ToolLibrary {
         }
 
         void iTool.toolDetails() {
+            throw new NotImplementedException();
+        }
+
+        public int CompareTo(Tool tool)
+        {
+            Tool another = (Tool)tool;
+            if (this.category.CompareTo(another.category) < 0)
+                return 1;
+            else
+                if (this.type.CompareTo(another.type) == 0)
+                return this.category.CompareTo(another.type);
+            else
+                return 1;
+        }
+
+        public int CompareTo(string other)
+        {
             throw new NotImplementedException();
         }
     }
