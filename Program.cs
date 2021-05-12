@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BSTreeInterface;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,11 @@ namespace ToolLibrary {
             ToolCollection toolCollection = new ToolCollection();
             Member member = new Member();
             MemberCollection memberCollection = new MemberCollection();
-            Tool[] toolArray = new Tool[] { };
+            ToolLibrarySystem TLS = new ToolLibrarySystem();
+            IBSTree BSTree = memberCollection.getBST();
+            Member currentMember;
+
+            memberCollection.registerMember("Fidel", "Seng", "0479147960", "1234");
 
             //MAIN MENU
             Console.WriteLine("Welcome to the Tool Library");
@@ -23,7 +28,8 @@ namespace ToolLibrary {
             Console.WriteLine("===============================\n");
             Console.WriteLine("Please make a selection (1-2, or 0 to exit):");
 
-            if (Console.ReadKey().KeyChar == '1') // Staff Login
+            char input = Console.ReadKey().KeyChar;
+            if (input == '1') // Staff Login
             {
                 Console.Clear();
                 Console.WriteLine("Enter staff login details");
@@ -32,48 +38,363 @@ namespace ToolLibrary {
                 Console.Write("Password: ");
                 String pass = Console.ReadLine();
 
-                member.staffLogin(user, pass);
-            } else if (Console.ReadKey().KeyChar == '2') // Member login
+                if (member.staffLogin(user, pass) == true)
+                {
+                    //STAFF MENU
+                    Console.Clear();
+                    Console.WriteLine("Welcome to the Tool Library");
+                    Console.WriteLine("================Staff Menu================");
+                    Console.WriteLine("1. Add a new tool");
+                    Console.WriteLine("2. Add new pieces of an existing tool");
+                    Console.WriteLine("3. Remove some pieces of a tool");
+                    Console.WriteLine("4. Register a new member");
+                    Console.WriteLine("5. Remove a member");
+                    Console.WriteLine("6. Find a contact number of a member");
+                    Console.WriteLine("0. Return to main menu");
+                    Console.WriteLine("==========================================\n");
+                    Console.WriteLine("Please make a selection (1-6, or 0 to return to main menu):");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+            } else if (input == '2') // Member login
             {
                 Console.Clear();
-                Console.WriteLine("Enter login details");
-                Console.Write("Username: ");
-                String user = Console.ReadLine();
+                Console.WriteLine("Enter member login details");
+                Console.Write("First Name: ");
+                String firstName = Console.ReadLine();
+                Console.Write("Last Name: ");
+                String lastName = Console.ReadLine();
                 Console.Write("Password: ");
-                String pass = Console.ReadLine();
+                String PIN = Console.ReadLine();
+
+                if(true)
+                //if(member.login(firstName, lastName, PIN, BSTree) == true)
+                {
+                    currentMember = new Member(firstName, lastName);
+                    //MEMBER MENU
+                    Console.Clear();
+                    Console.WriteLine("Welcome to the Tool Library");
+                    Console.WriteLine("===============Member Menu===============");
+                    Console.WriteLine("1. Display all the tools of a tool type");
+                    Console.WriteLine("2. Borrow a tool");
+                    Console.WriteLine("3. Return a tool");
+                    Console.WriteLine("4. List all the tools that I am renting");
+                    Console.WriteLine("5. Display top three (3) most frequently rented tools");
+                    Console.WriteLine("6. Return to main menu");
+                    Console.WriteLine("=========================================\n");
+                    Console.WriteLine("Please make a selection (1-5, or 0 to return to main menu):");
+                    input = Console.ReadKey().KeyChar;
+                    if (input == '1') // Display tools of a tool type
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Please make a selection (1-9, or 0 to return to main menu):");
+                        string[] enumarray = Enum.GetNames(typeof(Tool.toolCategory));
+                        int index = 1;
+                        foreach (string element in enumarray)
+                        {
+                            Console.WriteLine(index + ". " + element);
+                            index++;
+                        }
+                        input = Console.ReadKey().KeyChar;
+
+                        Console.Clear();
+                        switch(input)
+                        {
+                            case '1':
+                                toolCollection.displayToolsOfToolType("Gardening");
+                                break;
+                            case '2':
+                                toolCollection.displayToolsOfToolType("Flooring");
+                                break;
+                            case '3':
+                                toolCollection.displayToolsOfToolType("Fencing");
+                                break;
+                            case '4':
+                                toolCollection.displayToolsOfToolType("Measuring");
+                                break;
+                            case '5':
+                                toolCollection.displayToolsOfToolType("Cleaning");
+                                break;
+                            case '6':
+                                toolCollection.displayToolsOfToolType("Painting");
+                                break;
+                            case '7':
+                                toolCollection.displayToolsOfToolType("Electronic");
+                                break;
+                            case '8':
+                                toolCollection.displayToolsOfToolType("Electricity");
+                                break;
+                            case '9':
+                                toolCollection.displayToolsOfToolType("Automotive");
+                                break;
+                        }
+                        Console.ReadKey();
+                    } else if (input == '2') //Borrow a tool
+                    {
+                        Console.Clear();
+
+                        Console.WriteLine("Please make a selection (1-9):");
+                        string[] enumarray = Enum.GetNames(typeof(Tool.toolCategory));
+                        int index = 1;
+                        foreach (string element in enumarray)
+                        {
+                            Console.WriteLine(index + ". " + element);
+                            index++;
+                        }
+
+                        int selectedCategory = Console.ReadKey().KeyChar;
+                        int selectedType;
+                        Tool.toolCategory selectedCategoryEnum = Tool.toolCategory.Gardening;
+                        Tool.toolType selectedTypeEnum = Tool.toolType.lineTrimmers;
+
+                        Console.Clear();
+                        switch (selectedCategory)
+                        {
+                            case '1': // Gardening Category
+                                Console.WriteLine("Please make a selection (1-5):");
+                                toolCollection.displayToolsOfToolType("Gardening");
+                                selectedCategoryEnum = Tool.toolCategory.Gardening;
+                                selectedType = Console.ReadKey().KeyChar;
+                                switch (selectedType)
+                                {
+                                    case '1':
+                                        selectedTypeEnum = Tool.toolType.lineTrimmers;
+                                        break;
+                                    case '2':
+                                        selectedTypeEnum = Tool.toolType.lawnMowers;
+                                        break;
+                                    case '3':
+                                        selectedTypeEnum = Tool.toolType.handTools;
+                                        break;
+                                    case '4':
+                                        selectedTypeEnum = Tool.toolType.wheelbarrows;
+                                        break;
+                                    case '5':
+                                        selectedTypeEnum = Tool.toolType.gardenPowerTools;
+                                        break;
+                                }
+                                break;
+                            case '2': // Flooring Category
+                                Console.WriteLine("Please make a selection (1-6):");
+                                toolCollection.displayToolsOfToolType("Flooring");
+                                selectedCategoryEnum = Tool.toolCategory.Flooring;
+                                selectedType = Console.ReadKey().KeyChar;
+                                switch (selectedType)
+                                {
+                                    case '1':
+                                        selectedTypeEnum = Tool.toolType.scrapers;
+                                        break;
+                                    case '2':
+                                        selectedTypeEnum = Tool.toolType.floorLasers;
+                                        break;
+                                    case '3':
+                                        selectedTypeEnum = Tool.toolType.floorLevellingTools;
+                                        break;
+                                    case '4':
+                                        selectedTypeEnum = Tool.toolType.floorLevellingMaterials;
+                                        break;
+                                    case '5':
+                                        selectedTypeEnum = Tool.toolType.floorHandTools;
+                                        break;
+                                    case '6':
+                                        selectedTypeEnum = Tool.toolType.tilingTools;
+                                        break;
+                                }
+                                break;
+                            case '3': //Fencing Tools
+                                Console.WriteLine("Please make a selection (1-5):");
+                                toolCollection.displayToolsOfToolType("Fencing");
+                                selectedCategoryEnum = Tool.toolCategory.Fencing;
+                                selectedType = Console.ReadKey().KeyChar;
+                                switch (selectedType)
+                                {
+                                    case '1': 
+                                        selectedTypeEnum = Tool.toolType.fencingHandTools;
+                                        break;
+                                    case '2':
+                                        selectedTypeEnum = Tool.toolType.electricFencing;
+                                        break;
+                                    case '3':
+                                        selectedTypeEnum = Tool.toolType.steelFencingTools;
+                                        break;
+                                    case '4':
+                                        selectedTypeEnum = Tool.toolType.powerTools;
+                                        break;
+                                    case '5':
+                                        selectedTypeEnum = Tool.toolType.fencingAccessories;
+                                        break;
+                                }
+                                break;
+                            case '4': //Measuring Tools
+                                Console.WriteLine("Please make a selection (1-6):");
+                                toolCollection.displayToolsOfToolType("Measuring");
+                                selectedCategoryEnum = Tool.toolCategory.Measuring;
+                                selectedType = Console.ReadKey().KeyChar;
+                                switch (selectedType)
+                                {
+                                    case '1':
+                                        selectedTypeEnum = Tool.toolType.distanceTools;
+                                        break;
+                                    case '2':
+                                        selectedTypeEnum = Tool.toolType.laserMeasurer;
+                                        break;
+                                    case '3':
+                                        selectedTypeEnum = Tool.toolType.measuringJugs;
+                                        break;
+                                    case '4':
+                                        selectedTypeEnum = Tool.toolType.temperatureHumidityTools;
+                                        break;
+                                    case '5':
+                                        selectedTypeEnum = Tool.toolType.floorLevellingTools;
+                                        break;
+                                    case '6':
+                                        selectedTypeEnum = Tool.toolType.markers;
+                                        break;
+                                }
+                                break;
+                            case '5': //Cleaning Tools
+                                Console.WriteLine("Please make a selection (1-6):");
+                                toolCollection.displayToolsOfToolType("Cleaning");
+                                selectedCategoryEnum = Tool.toolCategory.Cleaning;
+                                selectedType = Console.ReadKey().KeyChar;
+                                switch (selectedType)
+                                {
+                                    case '1':
+                                        selectedTypeEnum = Tool.toolType.draining;
+                                        break;
+                                    case '2':
+                                        selectedTypeEnum = Tool.toolType.carCleaning;
+                                        break;
+                                    case '3':
+                                        selectedTypeEnum = Tool.toolType.vacuum;
+                                        break;
+                                    case '4':
+                                        selectedTypeEnum = Tool.toolType.pressureCleaners;
+                                        break;
+                                    case '5':
+                                        selectedTypeEnum = Tool.toolType.poolCleaning;
+                                        break;
+                                    case '6':
+                                        selectedTypeEnum = Tool.toolType.floorCleaning;
+                                        break;
+                                }
+                                break;
+                            case '6': //Painting Tools
+                                Console.WriteLine("Please make a selection (1-6):");
+                                toolCollection.displayToolsOfToolType("Painting");
+                                selectedCategoryEnum = Tool.toolCategory.Painting;
+                                selectedType = Console.ReadKey().KeyChar;
+                                switch (selectedType)
+                                {
+                                    case '1':
+                                        selectedTypeEnum = Tool.toolType.sanding;
+                                        break;
+                                    case '2':
+                                        selectedTypeEnum = Tool.toolType.brushes;
+                                        break;
+                                    case '3':
+                                        selectedTypeEnum = Tool.toolType.rollers;
+                                        break;
+                                    case '4':
+                                        selectedTypeEnum = Tool.toolType.paintRemoval;
+                                        break;
+                                    case '5':
+                                        selectedTypeEnum = Tool.toolType.paintScrapers;
+                                        break;
+                                    case '6':
+                                        selectedTypeEnum = Tool.toolType.sprayers;
+                                        break;
+                                }
+                                break;
+                            case '7': // Electronic tools
+                                Console.WriteLine("Please make a selection (1-5):");
+                                toolCollection.displayToolsOfToolType("Electronic");
+                                selectedCategoryEnum = Tool.toolCategory.Electronic;
+                                selectedType = Console.ReadKey().KeyChar;
+                                switch (selectedType)
+                                {
+                                    case '1':
+                                        selectedTypeEnum = Tool.toolType.voltageTester;
+                                        break;
+                                    case '2':
+                                        selectedTypeEnum = Tool.toolType.oscilloscopes;
+                                        break;
+                                    case '3':
+                                        selectedTypeEnum = Tool.toolType.thermalImaging;
+                                        break;
+                                    case '4':
+                                        selectedTypeEnum = Tool.toolType.dataTestTool;
+                                        break;
+                                    case '5':
+                                        selectedTypeEnum = Tool.toolType.insulationTesters;
+                                        break;
+                                }
+                                break;
+                            case '8': // Electricity tools
+                                Console.WriteLine("Please make a selection (1-5):");
+                                toolCollection.displayToolsOfToolType("Electricity");
+                                selectedCategoryEnum = Tool.toolCategory.Electricity;
+                                selectedType = Console.ReadKey().KeyChar;
+                                switch (selectedType)
+                                {
+                                    case '1':
+                                        selectedTypeEnum = Tool.toolType.testEquipment;
+                                        break;
+                                    case '2':
+                                        selectedTypeEnum = Tool.toolType.safetyEquipment;
+                                        break;
+                                    case '3':
+                                        selectedTypeEnum = Tool.toolType.basicHandTools;
+                                        break;
+                                    case '4':
+                                        selectedTypeEnum = Tool.toolType.circuitProtection;
+                                        break;
+                                    case '5':
+                                        selectedTypeEnum = Tool.toolType.cableTools;
+                                        break;
+                                }
+                                break;
+                            case '9': //Automotive tools
+                                Console.WriteLine("Please make a selection (1-6):");
+                                toolCollection.displayToolsOfToolType("Automotive");
+                                selectedCategoryEnum = Tool.toolCategory.Automotive;
+                                selectedType = Console.ReadKey().KeyChar;
+                                switch (selectedType)
+                                {
+                                    case '1':
+                                        selectedTypeEnum = Tool.toolType.jacks;
+                                        break;
+                                    case '2':
+                                        selectedTypeEnum = Tool.toolType.airCompressors;
+                                        break;
+                                    case '3':
+                                        selectedTypeEnum = Tool.toolType.batteryChargers;
+                                        break;
+                                    case '4':
+                                        selectedTypeEnum = Tool.toolType.socketTools;
+                                        break;
+                                    case '5':
+                                        selectedTypeEnum = Tool.toolType.braking;
+                                        break;
+                                    case '6':
+                                        selectedTypeEnum = Tool.toolType.drivetrain;
+                                        break;
+                                }
+                                break;
+                        }
+
+                        Tool desiredTool = new Tool(selectedCategoryEnum, selectedTypeEnum, 1);
+                        TLS.borrowTool(currentMember, desiredTool);
+                        Console.ReadKey();
+                    }
+                }
             } else
             {
 
             }
-
-            //STAFF MENU
-            Console.WriteLine("Welcome to the Tool Library");
-            Console.WriteLine("================Staff Menu================");
-            Console.WriteLine("1. Add a new tool");
-            Console.WriteLine("2. Add new pieces of an existing tool");
-            Console.WriteLine("3. Remove some pieces of a tool");
-            Console.WriteLine("4. Register a new member");
-            Console.WriteLine("5. Remove a member");
-            Console.WriteLine("6. Find a contact number of a member");
-            Console.WriteLine("0. Return to main menu");
-            Console.WriteLine("==========================================\n");
-            Console.WriteLine("Please make a selection (1-6, or 0 to return to main menu):");
-            Console.ReadKey();
             Console.Clear();
-
-            //MEMBER MENU
-            Console.WriteLine("Welcome to the Tool Library");
-            Console.WriteLine("===============Member Menu===============");
-            Console.WriteLine("1. Display all the tools of a tool type");
-            Console.WriteLine("2. Borrow a tool");
-            Console.WriteLine("3. Return a tool");
-            Console.WriteLine("4. List all the tools that I am renting");
-            Console.WriteLine("5. Display top three (3) most frequently rented tools");
-            Console.WriteLine("6. Return to main menu");
-            Console.WriteLine("=========================================\n");
-            Console.WriteLine("Please make a selection (1-5, or 0 to return to main menu):");
+            Console.WriteLine("FINAL WINDOW");
             Console.ReadKey();
-            Console.Clear();
         }
     }
 }
