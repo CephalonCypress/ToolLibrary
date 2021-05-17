@@ -19,7 +19,9 @@ namespace ToolLibrary {
             Hashtable memberLoanHT;
             Hashtable toolLoanHT;
 
-
+            Char charInput;
+            String strInput;
+            Char input;
 
             //MAIN MENU
             Console.WriteLine("Welcome to the Tool Library");
@@ -28,9 +30,18 @@ namespace ToolLibrary {
             Console.WriteLine("2. Member Login");
             Console.WriteLine("0. Exit");
             Console.WriteLine("===============================\n");
-            Console.WriteLine("Please make a selection (1-2, or 0 to exit):");
+            Console.WriteLine("Please make a selection (1-2, or 0 to exit):\n\n\t");
 
-            char input = Console.ReadKey().KeyChar;
+
+
+            //char input = Console.ReadKey().KeyChar;
+            while (!Char.TryParse(Console.ReadLine(), out charInput))
+            {
+                Console.WriteLine("Invalid input, try again");
+                Console.ReadKey();
+            }
+
+            input = Console.ReadKey().KeyChar;
             if (input == '1') // Staff Login
             {
                 Console.Clear();
@@ -58,7 +69,7 @@ namespace ToolLibrary {
                     Console.ReadKey();
                     Console.Clear();
                 }
-            } else if (input == '2') // Member login
+            } else if (charInput == '2') // Member login
             {
                 Console.Clear();
                 Console.WriteLine("Enter member login details");
