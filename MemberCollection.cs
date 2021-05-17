@@ -9,17 +9,17 @@ namespace ToolLibrary {
     public class MemberCollection : iMemberCollection
     {
         IBSTree BSTree = new BSTree();
-        public int Number { get; set; }
+        public string[] Tools;
 
-        int iMemberCollection.Number => throw new NotImplementedException();
+        int iMemberCollection.Number { get; }
 
-        //public int Number => throw new NotImplementedException();
-
+        //DEPRECATED METHOD
         public void registerMember(string firstName, string lastName, string contactNumber, string PIN)
         {
             BSTree.Insert(new Member(firstName, lastName, contactNumber, PIN));
         }
 
+        //DEPRECATED METHOD
         public void removeMember(string firstName, string lastName, string contactNumber, string PIN)
         {
             BSTree.Delete(new Member(firstName, lastName, contactNumber, PIN));
@@ -35,24 +35,39 @@ namespace ToolLibrary {
             return BSTree;
         }
 
-        void iMemberCollection.add(iMember aMember)
+        //add a new member to this member collection, make sure there are no duplicates in the member collection
+        public void add(Member member)
         {
-            throw new NotImplementedException();
+            if (!BSTree.Search(member))
+            {
+                BSTree.Insert(member);
+            } else
+            {
+                Console.WriteLine("The member is already registered");
+            }
+            //BSTree.Insert(new Member(firstName, lastName, contactNumber, PIN));
         }
 
-        void iMemberCollection.delete(iMember aMember)
+        //delete a given member from this member collection, a member can be deleted only when the member currently is not holding any tool
+        public void delete(Member member)
         {
-            throw new NotImplementedException();
+            //if(Tools.Length == 0)
+            //{
+                BSTree.Delete(member);
+            //}
+
         }
 
-        bool iMemberCollection.search(iMember aMember)
+        //search a given member in this member collection. Return true if this memeber is in the member collection; return false otherwise.
+        public bool search(Member member)
         {
-            throw new NotImplementedException();
+            return BSTree.Search(member);
         }
 
-        iMember[] iMemberCollection.toArray()
+        //output the members in this collection to an array of Member
+        public Member[] toArray()
         {
-            throw new NotImplementedException();
+            return BSTree.ToMemberArray();
         }
     }
 }

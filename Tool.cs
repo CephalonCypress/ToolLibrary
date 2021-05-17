@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace ToolLibrary {
-    public class Tool : iTool, IComparable<string>, IComparable<Tool> {
+    public class Tool : iTool, IComparable<Tool> {
         Hashtable toolHT = new Hashtable();
 
         private void toolCategoryTypeInitialiser()
@@ -59,7 +59,8 @@ namespace ToolLibrary {
             toolHT.Add("Braking", "Automotive");
             toolHT.Add("Drivetrain", "Automotive");
         }
-        public enum toolCategory {
+        public enum toolCategory
+        {
             Gardening,
             Flooring,
             Fencing,
@@ -71,7 +72,8 @@ namespace ToolLibrary {
             Automotive
         }
         private toolCategory category;
-        public toolCategory Category {
+        public toolCategory Category
+        {
             get { return category; }
             set { category = value; }
         }
@@ -137,12 +139,7 @@ namespace ToolLibrary {
         public int Quantity { get; set; }
         public int AvailableQuantity { get; set; }
         public int NoBorrowings { get; set; }
-
-        //public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        //public int Quantity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        //public int AvailableQuantity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        //public int NoBorrowings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        iMemberCollection iTool.GetBorrowers => throw new NotImplementedException();
+        public MemberCollection GetBorrowers { get; }
 
         public Tool(toolCategory category, toolType toolType, String name, int quantity) {
             this.Category = category;
@@ -151,32 +148,14 @@ namespace ToolLibrary {
             this.Quantity = quantity;
         }
 
-        public Tool(toolCategory category, toolType toolType, int quantity)
-        {
-            this.Category = category;
-            this.Type = toolType;
-            this.Quantity = quantity;
-        }
-
         public Hashtable getHT()
         {
             return toolHT;
         }
+
         public Tool() {
             toolCategoryTypeInitialiser();
 
-        }
-
-        void iTool.addBorrower(iMember aMember) {
-            throw new NotImplementedException();
-        }
-
-        void iTool.deleteBorrower(iMember aMember) {
-            throw new NotImplementedException();
-        }
-
-        void iTool.toolDetails() {
-            throw new NotImplementedException();
         }
 
         public int CompareTo(Tool tool)
@@ -191,9 +170,24 @@ namespace ToolLibrary {
                 return 1;
         }
 
-        public int CompareTo(string other)
+        //public int CompareTo(string other)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public void addBorrower(Member member)
+        {
+            
+        }
+
+        public void deleteBorrower(Member member)
         {
             throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
         }
     }
 }

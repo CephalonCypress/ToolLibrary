@@ -48,6 +48,8 @@ namespace BSTreeInterface
 		// post: all the nodes in the binary tree are visited once and only once in post-order
 		void PostOrderTraverse();
 
+		Member[] ToMemberArray();
+
 		// pre: true
 		// post: all the nodes in the binary tree are removed and the binary tree becomes empty
 		void Clear();

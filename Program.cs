@@ -10,16 +10,61 @@ namespace ToolLibrary {
     class Program {
         static void Main(string[] args) {
             Tool tool = new Tool();
+            Member[] members = new Member[0];
+            Tool[] toolArray = new Tool[] { };
             ToolCollection toolCollection = new ToolCollection();
             Member member = new Member();
             MemberCollection memberCollection = new MemberCollection();
             ToolLibrarySystem TLS = new ToolLibrarySystem();
             IBSTree BSTree = memberCollection.getBST();
             Member currentMember;
-            Hashtable memberLoanHT;
-            Hashtable toolLoanHT;
+            //Hashtable memberLoanHT;
+            //Hashtable toolLoanHT;
 
 
+            TLS.borrowTool(member, tool);
+
+            //act
+            //TLS.borrowTool(member, tool);
+            TLS.returnTool(member, tool);
+            Console.ReadKey();
+
+            //Tool selectedTool, expectedTool;
+            //Tool stool = new Tool(Tool.toolCategory.Gardening, Tool.toolType.sanding, "Gardening Tool", 5);
+            //Tool ftool = new Tool(Tool.toolCategory.Gardening, Tool.toolType.sanding, "Garden Tool", 5);
+            //Tool etool = new Tool(Tool.toolCategory.Gardening, Tool.toolType.sanding, "Gardens Tool", 5);
+            //selectedTool = new Tool(Tool.toolCategory.Gardening, Tool.toolType.sanding, "Gardening Tool", 5);
+
+            //Tool[] toolArray = new Tool[] { };
+            //Tool[] expectedArray = new Tool[] { expectedTool = new Tool(Tool.toolCategory.Gardening, Tool.toolType.sanding, "Gardening Tool", 10) };
+
+            ////act
+            //toolCollection.add(stool);
+            //toolCollection.add(ftool);
+            //toolCollection.add(etool);
+
+            ////TLS.borrowTool(member, ftool);
+            ////TLS.borrowTool(member, etool);
+            ////TLS.borrowTool(member, stool);
+
+
+            ////TLS.listTools(member);
+            ////foreach (String stringInArray in TLS.listTools(member))
+            ////{
+            ////    Console.WriteLine(stringInArray);
+            ////}
+            ////TLS.add(ftool, 5);
+            ////toolArray = toolCollection.toArray();
+            ////Console.WriteLine(toolArray[1].Quantity);
+            ////Console.WriteLine(expectedArray[0].Quantity);
+            ////memberCollection.add(new Member("asdasdd", "asdasd", "0458asdaasd", "1234"));
+            ////memberCollection.add(new Member("Fidel", "Seng", "0458938543", "1234"));
+            ////members = memberCollection.toArray();
+            ////foreach (Member test in members)
+            ////{
+            ////    Console.WriteLine(test.FirstName + test.LastName);
+            ////}
+            //Console.ReadKey();
 
             //MAIN MENU
             Console.WriteLine("Welcome to the Tool Library");
@@ -103,31 +148,49 @@ namespace ToolLibrary {
                         switch(input)
                         {
                             case '1':
-                                toolCollection.displayToolsOfToolType("Gardening");
+                                toolArray = toolCollection.toArray();
+                                TLS.displayTools("Gardening", toolArray);
+                                //toolCollection.displayToolsOfToolType("Gardening");
                                 break;
                             case '2':
-                                toolCollection.displayToolsOfToolType("Flooring");
+                                toolArray = toolCollection.toArray();
+                                TLS.displayTools("Sanding", toolArray);
+                                //toolCollection.displayToolsOfToolType("Flooring");
                                 break;
                             case '3':
-                                toolCollection.displayToolsOfToolType("Fencing");
+                                toolArray = toolCollection.toArray();
+                                TLS.displayTools("Sanding", toolArray);
+                                //toolCollection.displayToolsOfToolType("Fencing");
                                 break;
                             case '4':
-                                toolCollection.displayToolsOfToolType("Measuring");
+                                toolArray = toolCollection.toArray();
+                                TLS.displayTools("Sanding", toolArray);
+                                //toolCollection.displayToolsOfToolType("Measuring");
                                 break;
                             case '5':
-                                toolCollection.displayToolsOfToolType("Cleaning");
+                                toolArray = toolCollection.toArray();
+                                TLS.displayTools("Sanding", toolArray);
+                                //toolCollection.displayToolsOfToolType("Cleaning");
                                 break;
                             case '6':
-                                toolCollection.displayToolsOfToolType("Painting");
+                                toolArray = toolCollection.toArray();
+                                TLS.displayTools("Sanding", toolArray);
+                                //toolCollection.displayToolsOfToolType("Painting");
                                 break;
                             case '7':
-                                toolCollection.displayToolsOfToolType("Electronic");
+                                toolArray = toolCollection.toArray();
+                                TLS.displayTools("Sanding", toolArray);
+                                //toolCollection.displayToolsOfToolType("Electronic");
                                 break;
                             case '8':
-                                toolCollection.displayToolsOfToolType("Electricity");
+                                toolArray = toolCollection.toArray();
+                                TLS.displayTools("Sanding", toolArray);
+                                //toolCollection.displayToolsOfToolType("Electricity");
                                 break;
                             case '9':
-                                toolCollection.displayToolsOfToolType("Automotive");
+                                toolArray = toolCollection.toArray();
+                                TLS.displayTools("Sanding", toolArray);
+                                //toolCollection.displayToolsOfToolType("Automotive");
                                 break;
                         }
                         Console.ReadKey();
@@ -385,7 +448,9 @@ namespace ToolLibrary {
                                 break;
                         }
 
-                        Tool desiredTool = new Tool(selectedCategoryEnum, selectedTypeEnum, 1);
+                        Console.WriteLine("What is the name of the tool?");
+                        string toolName = Console.ReadLine();
+                        Tool desiredTool = new Tool(selectedCategoryEnum, selectedTypeEnum, toolName, 1);
                         TLS.borrowTool(currentMember, desiredTool);
                         Console.ReadKey();
                     } else if (input == '3') //Returning a tool

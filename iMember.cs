@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ToolLibrary {
+namespace ToolLibrary
+{
     //The specification of Member ADT
-    interface iMember {
-
+    interface iMember
+    {
+        
         string FirstName  //get and set the first name of this member
         {
             get;
@@ -34,10 +36,10 @@ namespace ToolLibrary {
             get;
         }
 
-        void addTool(iTool aTool); //add a given tool to the list of tools that this member is currently holding
-        int CompareTo(Member obj);
-        void deleteTool(iTool aTool); //delete a given tool from the list of tools that this member is currently holding
+        void addTool(Tool tool); //add a given tool to the list of tools that this member is currently holding
 
-        string memberDetails(); //return a string containing the first name, lastname, and contact phone number of this memeber
+        void deleteTool(Tool tool); //delete a given tool from the list of tools that this member is currently holding
+
+        string ToString(); //return a string containing the first name, lastname, and contact phone number of this memeber
     }
 }

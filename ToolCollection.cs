@@ -7,49 +7,12 @@ using System.Threading.Tasks;
 
 namespace ToolLibrary {
     public class ToolCollection : iToolCollection {
-        public Tool[] toolArray = new Tool[] { };
+        private Tool[] toolArray = new Tool[] { };
         Hashtable HT = new Hashtable();
-        Tool tool = new Tool();
+        private Tool tool = new Tool();
 
         public ToolCollection() {
 
-        }
-
-        public void addNewTool(Tool newTool)
-        {
-            Array.Resize<Tool>(ref toolArray, toolArray.Length + 1);
-            toolArray[toolArray.Length - 1] = newTool;
-
-            //Deprecated List Method
-            //List<Tool> ToolList = new List<Tool>(toolArray);
-            //ToolList.Add(newTool);
-            //toolArray = ToolList.ToArray();
-        }
-
-        public void increaseQuantity(Tool[] toolArray, Tool selectedTool, int quantity)
-        {
-            int index = Array.FindIndex(toolArray, tool => tool == selectedTool);
-            toolArray[index].Quantity += quantity;
-
-            //Deprecated List Method
-            //List<Tool> ToolList = new List<Tool>(toolArray);
-            //int index = ToolList.BinarySearch(selectedTool);
-            //selectedTool.Quantity += quantity;
-            //ToolList[0] = new Tool(selectedTool.Category, selectedTool.Type, selectedTool.Name, selectedTool.Quantity);
-            //toolArray = ToolList.ToArray();
-        }
-
-        public void decreaseQuantity(Tool[] toolArray, Tool selectedTool, int quantity)
-        {
-            int index = Array.FindIndex(toolArray, tool => tool == selectedTool);
-            toolArray[index].Quantity -= quantity;
-
-            //Deprecated list method
-            //List<Tool> ToolList = new List<Tool>(toolArray);
-            //int index = ToolList.BinarySearch(selectedTool);
-            //selectedTool.Quantity -= quantity;
-            //ToolList[0] = new Tool(selectedTool.Category, selectedTool.Type, selectedTool.Name, selectedTool.Quantity);
-            //toolArray = ToolList.ToArray();
         }
 
         public Tool[] getToolArray()
@@ -81,23 +44,48 @@ namespace ToolLibrary {
             }
         }
 
-        int iToolCollection.Number => throw new NotImplementedException();
+        int iToolCollection.Number { get; }
 
-
-        void iToolCollection.add(iTool aTool) {
-            throw new NotImplementedException();
+        //add a given tool to this tool collection
+        public void add(Tool tool)
+        {
+            Array.Resize<Tool>(ref toolArray, toolArray.Length + 1);
+            toolArray[toolArray.Length - 1] = tool;
         }
 
-        void iToolCollection.delete(iTool aTool) {
-            throw new NotImplementedException();
+        //delete a given tool from this tool collection
+        public void delete(Tool tool)
+        {
+            int index = 0;
+            search(tool);
+            for(int i = index; i < toolArray.Length - 1; i++)
+            {
+                toolArray[i] = toolArray[i + 1];
+            }
+            Array.Resize<Tool>(ref toolArray, toolArray.Length - 1);
         }
 
-        bool iToolCollection.search(iTool aTool) {
-            throw new NotImplementedException();
+        //search a given tool in this tool collection. Return true if this tool is in the tool collection; return false otherwise
+        public bool search(Tool tool)
+        {
+            int index = 0;
+            foreach (Tool toolIndex in toolArray)
+            {
+                if (tool.Category == toolIndex.Category &&
+                    tool.Type == toolIndex.Type &&
+                    tool.Name == toolIndex.Name)
+                {
+                    return true;
+                }
+                index++;
+            }
+            return false;
         }
 
-        iTool[] iToolCollection.toArray() {
-            throw new NotImplementedException();
+        // output the tools in this tool collection to an array of Tool
+        public Tool[] toArray()
+        {
+            return toolArray;
         }
-    }
+}
 }

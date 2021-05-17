@@ -39,6 +39,7 @@ namespace ToolLibrary
 	public class BSTree : IBSTree
 	{
 		private BTreeNode root;
+		public Member[] members = new Member[0];
 
 		public BSTree()
 		{
@@ -268,6 +269,25 @@ namespace ToolLibrary
 				PostOrderTraverse(root.LChild);
 				PostOrderTraverse(root.RChild);
 				Console.Write(root.Item.FirstName + " " + root.Item.LastName + " " + root.Item.ContactNumber);
+			}
+		}
+
+		public Member[] ToMemberArray()
+		{
+			PreOrderTraverseToArray(root);
+			return members;
+		}
+
+		private void PreOrderTraverseToArray(BTreeNode root)
+		{
+			if (root != null)
+            {
+				Array.Resize<Member>(ref members, members.Length + 1);
+				members[members.Length - 1] = new Member(root.Item.FirstName.ToString(), 
+					root.Item.LastName.ToString(), root.Item.ContactNumber.ToString(), 
+					root.Item.PIN.ToString());
+				PreOrderTraverseToArray(root.LChild);
+				PreOrderTraverseToArray(root.RChild);
 			}
 		}
 
