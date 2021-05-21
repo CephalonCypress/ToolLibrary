@@ -54,11 +54,23 @@ namespace ToolLibrary
         }
 
         //add new pieces of an existing tool to the system
-        public void add(Tool tool, int quantity)
+        public void add(Tool tool, int quantity, Tool[] toolArray)
         {
-            toolArray = toolCollection.toArray();
-            add(tool);
-            int index = Array.FindIndex(toolArray, toolInArray => toolInArray == tool);
+            int index = 0;
+
+            foreach (Tool indexedTool in toolArray)
+            {
+                if(indexedTool.Category == tool.Category && 
+                    indexedTool.Type == tool.Type &&
+                    indexedTool.Name == tool.Name)
+                {
+                    break;
+                } else
+                {
+                    index++;
+                }
+            }
+            //int index = Array.FindIndex(toolArray, toolInArray => toolInArray == tool);
             toolArray[index].Quantity += quantity;
         }
 
@@ -75,11 +87,24 @@ namespace ToolLibrary
         }
 
         //remove some pieces of a tool from the system
-        public void delete(Tool tool, int quantity)
+        public void delete(Tool tool, int quantity, Tool[] toolArray)
         {
-            toolArray = toolCollection.toArray();
-            add(tool);
-            int index = Array.FindIndex(toolArray, toolInArray => toolInArray == tool);
+            int index = 0;
+
+            foreach (Tool indexedTool in toolArray)
+            {
+                if (indexedTool.Category == tool.Category &&
+                    indexedTool.Type == tool.Type &&
+                    indexedTool.Name == tool.Name)
+                {
+                    break;
+                }
+                else
+                {
+                    index++;
+                }
+            }
+            //int index = Array.FindIndex(toolArray, toolInArray => toolInArray == tool);
             toolArray[index].Quantity -= quantity;
         }
 
@@ -126,6 +151,10 @@ namespace ToolLibrary
             }
             // For each entry in the Array of loaned tools, match the index of rented tools
             // to the index of the ones being rented by the user and then print to Console
+            Console.Clear();
+            Console.WriteLine("\t=============================================================");
+            Console.WriteLine("\t=======================Member Menu===========================");
+            Console.WriteLine("\tCategory \t\t Type \t\t Name");
             foreach (DictionaryEntry element in toolsLoanedArray)
             {
                 foreach (int indexedTool in indexOfRentedToolsList)
@@ -133,23 +162,34 @@ namespace ToolLibrary
                     if (element.Key.ToString() == indexedTool.ToString())
                     {
                         Tool tool = (Tool)element.Value;
-                        Console.WriteLine(tool.Category.ToString() + " " + tool.Type);
+                        Console.WriteLine("\t" + tool.Category.ToString() + "\t\t" + 
+                            tool.Type + "\t\t" +
+                            tool.Name);
                     }
                 }
             }
+            Console.WriteLine("\t=============================================================");
+
         }
 
         // display all the tools of a tool type selected by a member
         // MODIFIED METHOD TO PASS TOOL ARRAY
         public void displayTools(string toolType, Tool[] displaytoolArray)
         {
-            Console.WriteLine("Displaying all " + toolType + " tools");
-            Console.WriteLine("====================================");
+            Console.WriteLine("\t\t\t Tool Type List of Tools");
+            Console.WriteLine("\t================================================================================");
+            Console.WriteLine("\t\t Tool Name \t\t\t\t Available \t Total");
+            int index = 1;
+
             foreach (Tool toolInArray in displaytoolArray)
             {
-                Console.WriteLine(toolInArray.Name);
+                if(toolInArray.Type.ToString() == toolType)
+                {
+                    Console.WriteLine(index + ".\t\t" + toolInArray.Name + "\t\t\t\t" + toolInArray.AvailableQuantity + "\t" + toolInArray.Quantity);
+                    index++;
+                }
             }
-            Console.WriteLine("====================================");
+            Console.WriteLine("\t================================================================================");
         }
 
         public void borrowTool(Member member, Tool tool)

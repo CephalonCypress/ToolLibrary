@@ -54,10 +54,12 @@ namespace ToolLibrary.UnitTests {
             selectedTool = new Tool(Tool.toolCategory.Gardening, Tool.toolType.sanding, "Gardening Tool", 5);
             Tool[] toolArray = new Tool[] { };
             Tool[] expectedArray = new Tool[] { expectedTool = new Tool(Tool.toolCategory.Gardening, Tool.toolType.sanding, "Gardening Tool", 10) };
+            toolArray = toolCollection.toArray();
 
             //act
             toolCollection.add(selectedTool);
-            TLS.add(selectedTool, 5);
+            toolArray = toolCollection.toArray();
+            TLS.add(selectedTool, 5, toolArray);
             toolArray = toolCollection.toArray();
 
             //assert
@@ -76,7 +78,7 @@ namespace ToolLibrary.UnitTests {
 
             //act
             toolCollection.add(selectedTool);
-            TLS.delete(selectedTool, 3);
+            TLS.delete(selectedTool, 3, toolArray);
             toolArray = toolCollection.toArray();
 
             //assert
@@ -108,7 +110,7 @@ namespace ToolLibrary.UnitTests {
 
             //act
             memberCollection.add(new Member("Fidel", "Seng", "0458938543", "1234"));
-            memberCollection.removeMember("Fidel", "Seng", "0458938543", "1234");
+            memberCollection.delete(new Member("Fidel", "Seng", "0458938543", "1234"));
 
             //assert
             Assert.IsFalse(BSTree.Search(registeredMember));
@@ -132,23 +134,26 @@ namespace ToolLibrary.UnitTests {
         public void displayToolsOfToolType()
         {
             //arrange
-            Hashtable HT = new Hashtable();
+            ToolLibrarySystem TLS = new ToolLibrarySystem();
+            ToolCollection toolCollection = new ToolCollection();
+            Tool[] toolArray = new Tool[] { };
             Tool tool = new Tool();
-            HT = tool.getHT();
-            int Count = 0;
 
+            Tool stool = new Tool(Tool.toolCategory.Painting, Tool.toolType.sanding, "Gardening Tool", 1);
+            Tool ftool = new Tool(Tool.toolCategory.Painting, Tool.toolType.sanding, "Garden Tool", 2);
+            Tool etool = new Tool(Tool.toolCategory.Painting, Tool.toolType.sanding, "Gardens Tool", 3);
+
+            toolCollection.add(stool);
+            toolCollection.add(ftool);
+            toolCollection.add(etool);
+
+            toolArray = toolCollection.toArray();
             //act
-            foreach (DictionaryEntry element in HT)
-            {
-                if (element.Value.ToString() == "Gardening")
-                {
-                    Console.WriteLine(element.Key);
-                    Count++;
-                }
-            }
+
+            TLS.displayTools("sanding", toolArray);
 
             //assert
-            Assert.AreEqual(Count, 5);
+            Assert.AreEqual(toolArray.Length, 3);
         }
 
         [TestMethod]

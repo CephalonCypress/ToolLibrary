@@ -6,59 +6,61 @@ using System.Linq;
 namespace ToolLibrary {
     public class Tool : iTool, IComparable<Tool> {
         Hashtable toolHT = new Hashtable();
-
-        private void toolCategoryTypeInitialiser()
+        SortedDictionary<string, string> toolSD = new SortedDictionary<string, string>();
+        private void toolTypeInitialiser()
         {
-            toolHT.Add("Line Trimmer", "Gardening");
-            toolHT.Add("Lawn Mowers", "Gardening");
-            toolHT.Add("Hand Tools", "Gardening");
-            toolHT.Add("Wheelbarrows", "Gardening");
-            toolHT.Add("Garden Power Tools", "Gardening");
-            toolHT.Add("Scrapers", "Flooring");
-            toolHT.Add("Floor Lasers", "Flooring");
-            toolHT.Add("Floor Levelling Tools", "Flooring");
-            toolHT.Add("Floor Hand Tools", "Flooring");
-            toolHT.Add("Tiling Tools", "Flooring");
-            toolHT.Add("Fencing Hand Tools", "Fencing");
-            toolHT.Add("Electric Fencing", "Fencing");
-            toolHT.Add("Steel Fencing Tools", "Fencing");
-            toolHT.Add("Power Tools", "Fencing");
-            toolHT.Add("Fencing Accessories", "Fencing");
-            toolHT.Add("Distance Tools", "Measuring");
-            toolHT.Add("Laser Measurer", "Measuring");
-            toolHT.Add("Measuring Jugs", "Measuring");
-            toolHT.Add("Temperature & Humidity Tools", "Measuring");
-            toolHT.Add("Levelling Tools", "Measuring");
-            toolHT.Add("Markers", "Measuring");
-            toolHT.Add("Draining", "Cleaning");
-            toolHT.Add("Car Cleaning", "Cleaning");
-            toolHT.Add("Vacuum", "Cleaning");
-            toolHT.Add("Pressure Cleaners", "Cleaning");
-            toolHT.Add("Pool Cleaning", "Cleaning");
-            toolHT.Add("Floor Cleaning", "Cleaning");
-            toolHT.Add("Sanding Tools", "Painting");
-            toolHT.Add("Brushes", "Painting");
-            toolHT.Add("Rollers", "Painting");
-            toolHT.Add("Paint Removal Tools", "Painting");
-            toolHT.Add("Paint Scrapers", "Painting");
-            toolHT.Add("Sprayers", "Painting");
-            toolHT.Add("Voltage Tester", "Electronic");
-            toolHT.Add("Oscilloscopes", "Electronic");
-            toolHT.Add("Thermal Imaging", "Electronic");
-            toolHT.Add("Data Test Tool", "Electronic");
-            toolHT.Add("Insulation Testers", "Electronic");
-            toolHT.Add("Test Equipment", "Electricity");
-            toolHT.Add("Safety Equipment", "Electricity");
-            toolHT.Add("Basic Hand Tools", "Electricity");
-            toolHT.Add("Circuit Protection", "Electricity");
-            toolHT.Add("Cable Tools", "Electricity");
-            toolHT.Add("Jacks", "Automotive");
-            toolHT.Add("Air Compressors", "Automotive");
-            toolHT.Add("Battery Chargers", "Automotive");
-            toolHT.Add("Socket Tools", "Automotive");
-            toolHT.Add("Braking", "Automotive");
-            toolHT.Add("Drivetrain", "Automotive");
+            toolSD.Add("Line Trimmer", "Gardening");
+            toolSD.Add("Lawn Mowers", "Gardening");
+            toolSD.Add("Hand Tools", "Gardening");
+            toolSD.Add("Wheelbarrows", "Gardening");
+            toolSD.Add("Garden Power Tools", "Gardening");
+            toolSD.Add("Scrapers", "Flooring");
+            toolSD.Add("Floor Lasers", "Flooring");
+            toolSD.Add("Floor Levelling Tools", "Flooring");
+            toolSD.Add("Floor Levelling Materials", "Flooring");
+            toolSD.Add("Floor Hand Tools", "Flooring");
+            toolSD.Add("Tiling Tools", "Flooring");
+            toolSD.Add("Fencing Hand Tools", "Fencing");
+            toolSD.Add("Electric Fencing", "Fencing");
+            toolSD.Add("Steel Fencing Tools", "Fencing");
+            toolSD.Add("Power Tools", "Fencing");
+            toolSD.Add("Fencing Accessories", "Fencing");
+            toolSD.Add("Distance Tools", "Measuring");
+            toolSD.Add("Laser Measurer", "Measuring");
+            toolSD.Add("Measuring Jugs", "Measuring");
+            toolSD.Add("Temperature & Humidity Tools", "Measuring");
+            toolSD.Add("Levelling Tools", "Measuring");
+            toolSD.Add("Markers", "Measuring");
+            toolSD.Add("Draining", "Cleaning");
+            toolSD.Add("Car Cleaning", "Cleaning");
+            toolSD.Add("Vacuum", "Cleaning");
+            toolSD.Add("Pressure Cleaners", "Cleaning");
+            toolSD.Add("Pool Cleaning", "Cleaning");
+            toolSD.Add("Floor Cleaning", "Cleaning");
+            toolSD.Add("Sanding Tools", "Painting");
+            toolSD.Add("Brushes", "Painting");
+            toolSD.Add("Rollers", "Painting");
+            toolSD.Add("Paint Removal Tools", "Painting");
+            toolSD.Add("Paint Scrapers", "Painting");
+            toolSD.Add("Sprayers", "Painting");
+            toolSD.Add("Voltage Tester", "Electronic");
+            toolSD.Add("Oscilloscopes", "Electronic");
+            toolSD.Add("Thermal Imaging", "Electronic");
+            toolSD.Add("Data Test Tool", "Electronic");
+            toolSD.Add("Insulation Testers", "Electronic");
+            toolSD.Add("Test Equipment", "Electricity");
+            toolSD.Add("Safety Equipment", "Electricity");
+            toolSD.Add("Basic Hand Tools", "Electricity");
+            toolSD.Add("Circuit Protection", "Electricity");
+            toolSD.Add("Cable Tools", "Electricity");
+            toolSD.Add("Jacks", "Automotive");
+            toolSD.Add("Air Compressors", "Automotive");
+            toolSD.Add("Battery Chargers", "Automotive");
+            toolSD.Add("Socket Tools", "Automotive");
+            toolSD.Add("Braking", "Automotive");
+            toolSD.Add("Drivetrain", "Automotive");
         }
+
         public enum toolCategory
         {
             Gardening,
@@ -139,13 +141,25 @@ namespace ToolLibrary {
         public int Quantity { get; set; }
         public int AvailableQuantity { get; set; }
         public int NoBorrowings { get; set; }
+        public int timesBorrowed { get; set; }
         public MemberCollection GetBorrowers { get; }
+
 
         public Tool(toolCategory category, toolType toolType, String name, int quantity) {
             this.Category = category;
             this.Type = toolType;
             this.Name = name;
             this.Quantity = quantity;
+            this.AvailableQuantity = quantity;
+            this.timesBorrowed = 0;
+        }
+
+        public Tool(toolCategory category, toolType toolType, String name)
+        {
+            this.Category = category;
+            this.Type = toolType;
+            this.Name = name;
+            this.timesBorrowed = 0;
         }
 
         public Hashtable getHT()
@@ -153,9 +167,13 @@ namespace ToolLibrary {
             return toolHT;
         }
 
-        public Tool() {
-            toolCategoryTypeInitialiser();
+        public SortedDictionary<string, string> getSD()
+        {
+            return toolSD;
+        }
 
+        public Tool() {
+            toolTypeInitialiser();
         }
 
         public int CompareTo(Tool tool)

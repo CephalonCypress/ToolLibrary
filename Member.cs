@@ -23,7 +23,16 @@ namespace ToolLibrary {
             ContactNumber = contactNumber;
             this.PIN = PIN;
             String[] Tools = new String[] { };
-    }
+        }
+
+        //Create member object with first name, last name and PIN
+        public Member(String firstName, string lastName, string PIN)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            this.PIN = PIN;
+            String[] Tools = new String[] { };
+        }
 
         //Create member object with first and last name only
         public Member(String firstName, string lastName)

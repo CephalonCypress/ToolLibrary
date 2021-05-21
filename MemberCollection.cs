@@ -14,16 +14,16 @@ namespace ToolLibrary {
         int iMemberCollection.Number { get; }
 
         //DEPRECATED METHOD
-        public void registerMember(string firstName, string lastName, string contactNumber, string PIN)
-        {
-            BSTree.Insert(new Member(firstName, lastName, contactNumber, PIN));
-        }
+        //public void registerMember(string firstName, string lastName, string contactNumber, string PIN)
+        //{
+        //    BSTree.Insert(new Member(firstName, lastName, contactNumber, PIN));
+        //}
 
-        //DEPRECATED METHOD
-        public void removeMember(string firstName, string lastName, string contactNumber, string PIN)
-        {
-            BSTree.Delete(new Member(firstName, lastName, contactNumber, PIN));
-        }
+        ////DEPRECATED METHOD
+        //public void removeMember(string firstName, string lastName, string contactNumber, string PIN)
+        //{
+        //    BSTree.Delete(new Member(firstName, lastName, contactNumber, PIN));
+        //}
 
         public string searchMember(string firstName, string lastName)
         {
@@ -45,7 +45,6 @@ namespace ToolLibrary {
             {
                 Console.WriteLine("The member is already registered");
             }
-            //BSTree.Insert(new Member(firstName, lastName, contactNumber, PIN));
         }
 
         //delete a given member from this member collection, a member can be deleted only when the member currently is not holding any tool

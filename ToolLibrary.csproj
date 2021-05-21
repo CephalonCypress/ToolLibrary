@@ -153,6 +153,7 @@
     <Compile Include="ToolCollection.cs" />
     <Compile Include="ToolCategoryType.cs" />
     <Compile Include="ToolLibrarySystem.cs" />
+    <Compile Include="UserInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

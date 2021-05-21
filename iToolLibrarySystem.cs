@@ -8,11 +8,11 @@ namespace ToolLibrary
     {
         void add(Tool tool); // add a new tool to the system
 
-        void add(Tool tool, int quantity); //add new pieces of an existing tool to the system
+        void add(Tool tool, int quantity, Tool[] toolArray); //add new pieces of an existing tool to the system
 
         void delete(Tool tool); //delte a given tool from the system
 
-        void delete(Tool tool, int quantity); //remove some pieces of a tool from the system
+        void delete(Tool tool, int quantity, Tool[] toolArray); //remove some pieces of a tool from the system
 
         void add(Member member); //add a new memeber to the system
 
