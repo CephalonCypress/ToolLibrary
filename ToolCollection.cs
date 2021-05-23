@@ -49,8 +49,16 @@ namespace ToolLibrary {
         //add a given tool to this tool collection
         public void add(Tool tool)
         {
-            Array.Resize<Tool>(ref toolArray, toolArray.Length + 1);
-            toolArray[toolArray.Length - 1] = tool;
+            if(search(tool))
+            {
+                toolArray[findIndex(tool)].Quantity += tool.Quantity;
+                toolArray[findIndex(tool)].AvailableQuantity += tool.AvailableQuantity;
+            }
+            else
+            {
+                Array.Resize<Tool>(ref toolArray, toolArray.Length + 1);
+                toolArray[toolArray.Length - 1] = tool;
+            }
         }
 
         //delete a given tool from this tool collection
@@ -80,6 +88,22 @@ namespace ToolLibrary {
                 index++;
             }
             return false;
+        }
+
+        private int findIndex(Tool tool)
+        {
+            int index = 0;
+            foreach (Tool toolIndex in toolArray)
+            {
+                if (tool.Category == toolIndex.Category &&
+                    tool.Type == toolIndex.Type &&
+                    tool.Name == toolIndex.Name)
+                {
+                    return index;
+                }
+                index++;
+            }
+            return index;
         }
 
         // output the tools in this tool collection to an array of Tool

@@ -38,11 +38,11 @@ namespace ToolLibrary
 
         public UserInterface()
         {
-            Tool stool = new Tool(Tool.toolCategory.Painting, Tool.toolType.sanding, "Gardening Tool", 1);
+            //TESTING ONLY
+            Tool dtool = new Tool(Tool.toolCategory.Painting, Tool.toolType.sanding, "Gardening Tool", 1);
             Tool ftool = new Tool(Tool.toolCategory.Painting, Tool.toolType.sanding, "Garden Tool", 2);
             Tool etool = new Tool(Tool.toolCategory.Painting, Tool.toolType.sanding, "Gardens Tool", 3);
-
-            toolCollection.add(stool);
+            toolCollection.add(dtool);
             toolCollection.add(ftool);
             toolCollection.add(etool);
         }
@@ -511,7 +511,6 @@ namespace ToolLibrary
                     Console.ReadKey();
                     return true;
                 case '0': // Return to main menu
-                    
                     return false;
             }
             return false;
@@ -590,8 +589,15 @@ namespace ToolLibrary
                     {
                         selectedToolIndex = Convert.ToInt32(charInput.ToString()) - 1;
                     }
-                    Tool desiredTool = new Tool(selectedCategoryEnum, selectedTypeEnum, toolsOfSpecifiedTypeArray[selectedToolIndex].Name, 1);
+                    Tool desiredTool = new Tool(selectedCategoryEnum, 
+                        selectedTypeEnum, 
+                        toolsOfSpecifiedTypeArray[selectedToolIndex].Name,
+                        toolsOfSpecifiedTypeArray[selectedToolIndex].Quantity,
+                        toolsOfSpecifiedTypeArray[selectedToolIndex].AvailableQuantity,
+                        toolsOfSpecifiedTypeArray[selectedToolIndex].timesBorrowed++
+                        );
                     TLS.borrowTool(currentMember, desiredTool);
+                    Console.ReadKey();
                     return true;
 
                 case '3': // Returning a tool
@@ -608,6 +614,10 @@ namespace ToolLibrary
                     Console.ReadKey(); 
                     return true;
                 case '5': // Display top three (3) most frequently rented tools
+                    toolArray = toolCollection.toArray();
+                    TLS.displayTopThree(toolArray);
+                    Console.WriteLine("Press any key to continue");
+                    Console.ReadKey();
                     return true;
                 case '0':
                     return false;

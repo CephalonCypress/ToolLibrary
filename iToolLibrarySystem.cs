@@ -28,7 +28,7 @@ namespace ToolLibrary
 
         string[] listTools(Member member); //get a list of tools that are currently held by a given member
 
-        void displayTopThree(); //Display top three most frequently borrowed tools by the members in the descending order by the number of times each tool has been borrowed.
+        void displayTopThree(Tool[] toolArray); //Display top three most frequently borrowed tools by the members in the descending order by the number of times each tool has been borrowed.
 
     }
 }

@@ -13,6 +13,7 @@ namespace ToolLibrary {
         public string LastName { get; set; }
         public string ContactNumber { get; set; }
         public string PIN { get; set; }
+        public int toolsBorrowed { get; set; }
         MemberCollection memberCollection = new MemberCollection();
         //IBSTree BSTree;
 
@@ -23,6 +24,7 @@ namespace ToolLibrary {
             ContactNumber = contactNumber;
             this.PIN = PIN;
             String[] Tools = new String[] { };
+            toolsBorrowed = 0;
         }
 
         //Create member object with first name, last name and PIN

@@ -137,6 +137,7 @@ namespace ToolLibrary
             List<Tool> rentedToolsList = new List<Tool>();
             DictionaryEntry[] toolsLoanedArray = new DictionaryEntry[toolLoanHT.Count];
             toolLoanHT.CopyTo(toolsLoanedArray, 0);
+            string displayBorrowingToolsString = "";
             int index = toolsLoanedArray.Count() - 1;
 
             // For each member that is currently loaning a tool, if the first name and last name match
@@ -152,9 +153,14 @@ namespace ToolLibrary
             // For each entry in the Array of loaned tools, match the index of rented tools
             // to the index of the ones being rented by the user and then print to Console
             Console.Clear();
-            Console.WriteLine("\t=============================================================");
-            Console.WriteLine("\t=======================Member Menu===========================");
-            Console.WriteLine("\tCategory \t\t Type \t\t Name");
+
+            displayBorrowingToolsString += "\t===========================================================================\r\n";
+            displayBorrowingToolsString += "\t------------------------Member Menu - Displaying Borrowed Tools------------\r\n";
+            displayBorrowingToolsString += "\t|Category            |Type           |Name                |No. Available  |\r\n";
+
+            //Console.WriteLine("\t=============================================================");
+            //Console.WriteLine("\t=======================Member Menu===========================");
+            //Console.WriteLine("\tCategory \t\t Type \t\t Name");
             foreach (DictionaryEntry element in toolsLoanedArray)
             {
                 foreach (int indexedTool in indexOfRentedToolsList)
@@ -162,13 +168,21 @@ namespace ToolLibrary
                     if (element.Key.ToString() == indexedTool.ToString())
                     {
                         Tool tool = (Tool)element.Value;
-                        Console.WriteLine("\t" + tool.Category.ToString() + "\t\t" + 
-                            tool.Type + "\t\t" +
-                            tool.Name);
+                        displayBorrowingToolsString += String.Format("\t|{0, -20}|{1, -15}|{2, -20}|{3, -15}|\r\n",
+                            tool.Category.ToString(),
+                            tool.Type,
+                            tool.Name,
+                            tool.AvailableQuantity);
+                        //Console.WriteLine("\t" + tool.Category.ToString() + "\t\t" + 
+                        //    tool.Type + "\t\t" +
+                        //    tool.Name + "\t\t" +
+                        //    tool.timesBorrowed + "\t\t" +
+                        //    tool.AvailableQuantity);
                     }
                 }
             }
-            Console.WriteLine("\t=============================================================");
+            displayBorrowingToolsString += "\t===========================================================================\r\n";
+            Console.WriteLine(displayBorrowingToolsString);
 
         }
 
@@ -194,9 +208,20 @@ namespace ToolLibrary
 
         public void borrowTool(Member member, Tool tool)
         {
-            count = memberLoanHT.Count;
-            memberLoanHT.Add(count, member);
-            toolLoanHT.Add(count, tool);
+            if (member.toolsBorrowed < 3)
+            {
+                count = memberLoanHT.Count;
+                tool.AvailableQuantity--;
+                tool.timesBorrowed++;
+                memberLoanHT.Add(count, member);
+                toolLoanHT.Add(count, tool);
+                member.toolsBorrowed++;
+            } else
+            {
+                Console.WriteLine("You cannot borrow more than 3 tools");
+                Console.WriteLine("Press any key to continue");
+            }
+
         }
 
         public void returnTool(Member currentmember, Tool returnedTool)
@@ -220,6 +245,7 @@ namespace ToolLibrary
                     }
                 }
             }
+            tool.AvailableQuantity++;
             memberLoanHT.Remove(memberIndex);
             toolLoanHT.Remove(toolIndex);
 
@@ -271,9 +297,79 @@ namespace ToolLibrary
         }
 
         //Display top three most frequently borrowed tools by the members in the descending order by the number of times each tool has been borrowed.
-        public void displayTopThree()
+        public void displayTopThree(Tool[] toolArray)
         {
-            throw new NotImplementedException();
+            //toolArray = toolCollection.toArray();
+            string displayTopThreeString;
+            heapSort(toolArray, toolArray.Length);
+
+
+            displayTopThreeString = "\t=========================================================================================\r\n";
+            displayTopThreeString += "\t|Category    |Type                |Name                     |Quantity  |Times Borrowed  |\r\n";
+            displayTopThreeString += "\t=========================================================================================\r\n";
+            for(int i = 0; i < 3; i++)
+            {
+                displayTopThreeString += String.Format("\t|{0, -12}|{1, -20}|{2, -25}|{3, -10}|{4, -16}|\r\n",
+                    toolArray[i].Category,
+                    toolArray[i].Type,
+                    toolArray[i].Name,
+                    toolArray[i].Quantity,
+                    toolArray[i].timesBorrowed);
+            }
+            Console.WriteLine(displayTopThreeString);
+        }
+
+        // Heap sort method
+        private static void heapSort(Tool[] toolArray, int n)
+        {
+            for (int i = n / 2 - 1; i >= 0; i--)
+                heapify(toolArray, n, i);
+            for (int i = n - 1; i >= 0; i--)
+            {
+                Tool temp = toolArray[0];
+                toolArray[0] = toolArray[i];
+                toolArray[i] = temp;
+                heapify(toolArray, i, 0);
+            }
+        }
+
+        //Heapify method
+        private static void heapify(Tool[] toolArray, int n, int i)
+        {
+            int smallest = i;
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+            if (left < n && toolArray[left].timesBorrowed < toolArray[smallest].timesBorrowed)
+                smallest = left;
+            if (right < n && toolArray[right].timesBorrowed < toolArray[smallest].timesBorrowed)
+                smallest = right;
+            if (smallest != i)
+            {
+                Tool swap = toolArray[i];
+                toolArray[i] = toolArray[smallest];
+                toolArray[smallest] = swap;
+                heapify(toolArray, n, smallest);
+                //Console.WriteLine(toolArray[i].Name + "\t" + toolArray[i].timesBorrowed + "END OF ARRAY");
+            }
+        }
+
+        //Example heap sort
+        public void exampleHeapSort(Tool[] toolArray)
+        {
+            int n = toolArray.Length, i;
+            Console.WriteLine("Heap Sort");
+            Console.WriteLine("Initial array is: ");
+            for (i = 0; i < n; i++)
+            {
+                Console.WriteLine(toolArray[i].Name + "\t\t" + toolArray[i].timesBorrowed);
+            }
+            heapSort(toolArray, toolArray.Length);
+            Console.WriteLine("\nSorted Array is: ");
+            for (i = 0; i < n; i++)
+            {
+                Console.WriteLine(toolArray[i].Name + "\t\t" + toolArray[i].timesBorrowed);
+            }
+            heapSort(toolArray, toolArray.Length);
         }
     }
 }

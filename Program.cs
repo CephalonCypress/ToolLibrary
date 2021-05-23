@@ -41,20 +41,56 @@ namespace ToolLibrary {
             bool StaffLoggedIn = false;
             bool MemberLoggedIn = false;
 
+
+
             //TLS.borrowTool(member, tool);
 
             //act
             //TLS.borrowTool(member, tool);
             //TLS.returnTool(member, tool);
+            Member firstMember = new Member("aa", "aa", "1234");
+            Member secondMember = new Member("bb", "bb", "1234");
+            Member thirdMember = new Member("cc", "cc", "1234");
 
             //Tool selectedTool, expectedTool;
-            //Tool stool = new Tool(Tool.toolCategory.Painting, Tool.toolType.sanding, "Gardening Tool", 1);
-            //Tool ftool = new Tool(Tool.toolCategory.Painting, Tool.toolType.sanding, "Garden Tool", 2);
-            //Tool etool = new Tool(Tool.toolCategory.Painting, Tool.toolType.sanding, "Gardens Tool", 3);
+            Tool stool = new Tool(Tool.toolCategory.Automotive, Tool.toolType.lineTrimmers, "Line Trimmer 5000", 4);
+            Tool ftool = new Tool(Tool.toolCategory.Painting, Tool.toolType.lawnMowers, "Lawn Mowers 2000", 2);
+            Tool etool = new Tool(Tool.toolCategory.Painting, Tool.toolType.handTools, "Hand Tool 5000", 3);
+            Tool gtool = new Tool(Tool.toolCategory.Painting, Tool.toolType.wheelbarrows, "Wheelbarrow", 4);
+            //Tool htool = new Tool(Tool.toolCategory.Painting, Tool.toolType.gardenPowerTools, "Garden Power Tool 1000", 5);
+            toolCollection.add(stool);
+            toolCollection.add(ftool);
+            toolCollection.add(etool);
+            toolCollection.add(gtool);
+
 
             //toolCollection.add(stool);
             //toolCollection.add(ftool);
             //toolCollection.add(etool);
+            //toolCollection.add(gtool);
+            //toolCollection.add(htool);
+            TLS.borrowTool(firstMember, stool);
+            TLS.borrowTool(firstMember, ftool);
+            TLS.borrowTool(firstMember, etool);
+            //TLS.borrowTool(firstMember, gtool);
+            TLS.displayBorrowingTools(firstMember);
+            Console.ReadKey();
+            //TLS.borrowTool(secondMember, ftool);
+            //TLS.borrowTool(thirdMember, ftool);
+            //TLS.borrowTool(thirdMember, ftool);
+            //TLS.borrowTool(firstMember, etool);
+            //TLS.borrowTool(secondMember, etool);
+            //TLS.borrowTool(thirdMember, gtool);
+            //TLS.borrowTool(thirdMember, gtool);
+            //TLS.borrowTool(thirdMember, gtool);
+            //TLS.borrowTool(thirdMember, htool);
+            //toolArray = toolCollection.toArray();
+            //TLS.displayTopThree(toolArray);
+
+            //Console.ReadKey();
+
+            //TLS.exampleHeapSort();
+            //Console.ReadKey();
             //assert
 
 
@@ -182,6 +218,7 @@ namespace ToolLibrary {
                     Console.Clear();
                     Console.WriteLine("FINAL WINDOW");
                     Console.ReadKey();
+                    break;
                 }
             }
             

@@ -154,12 +154,21 @@ namespace ToolLibrary {
             this.timesBorrowed = 0;
         }
 
+        public Tool(toolCategory category, toolType toolType, String name, int quantity, int availableQuantity, int timesBorrowed)
+        {
+            this.Category = category;
+            this.Type = toolType;
+            this.Name = name;
+            this.Quantity = quantity;
+            this.AvailableQuantity = quantity;
+            this.timesBorrowed = 0;
+        }
+
         public Tool(toolCategory category, toolType toolType, String name)
         {
             this.Category = category;
             this.Type = toolType;
             this.Name = name;
-            this.timesBorrowed = 0;
         }
 
         public Hashtable getHT()
