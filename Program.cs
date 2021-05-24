@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace ToolLibrary {
     class Program {
         static void Main(string[] args) {
-            Tool tool = new Tool();
-            ToolCollection toolCollection = new ToolCollection();
+            //Tool tool = new Tool();
+            //ToolCollection toolCollection = new ToolCollection();
             Member member = new Member();
             MemberCollection memberCollection = new MemberCollection();
-            ToolLibrarySystem TLS = new ToolLibrarySystem();
+            //ToolLibrarySystem TLS = new ToolLibrarySystem();
 
-            Member[] members = new Member[0];
-            Tool[] toolArray = new Tool[] { };
+            //Member[] members = new Member[0];
+            //Tool[] toolArray = new Tool[] { };
 
             IBSTree BSTree = memberCollection.getBST();
             Member currentMember;
@@ -48,20 +48,20 @@ namespace ToolLibrary {
             //act
             //TLS.borrowTool(member, tool);
             //TLS.returnTool(member, tool);
-            Member firstMember = new Member("aa", "aa", "1234");
-            Member secondMember = new Member("bb", "bb", "1234");
-            Member thirdMember = new Member("cc", "cc", "1234");
+            //Member firstMember = new Member("aa", "aa", "1234");
+            //Member secondMember = new Member("bb", "bb", "1234");
+            //Member thirdMember = new Member("cc", "cc", "1234");
 
             //Tool selectedTool, expectedTool;
-            Tool stool = new Tool(Tool.toolCategory.Automotive, Tool.toolType.lineTrimmers, "Line Trimmer 5000", 4);
-            Tool ftool = new Tool(Tool.toolCategory.Painting, Tool.toolType.lawnMowers, "Lawn Mowers 2000", 2);
-            Tool etool = new Tool(Tool.toolCategory.Painting, Tool.toolType.handTools, "Hand Tool 5000", 3);
-            Tool gtool = new Tool(Tool.toolCategory.Painting, Tool.toolType.wheelbarrows, "Wheelbarrow", 4);
+            //Tool stool = new Tool(Tool.toolCategory.Automotive, Tool.toolType.lineTrimmers, "Line Trimmer 5000", 4);
+            //Tool ftool = new Tool(Tool.toolCategory.Painting, Tool.toolType.lawnMowers, "Lawn Mowers 2000", 2);
+            //Tool etool = new Tool(Tool.toolCategory.Painting, Tool.toolType.handTools, "Hand Tool 5000", 3);
+            //Tool gtool = new Tool(Tool.toolCategory.Painting, Tool.toolType.wheelbarrows, "Wheelbarrow", 4);
             //Tool htool = new Tool(Tool.toolCategory.Painting, Tool.toolType.gardenPowerTools, "Garden Power Tool 1000", 5);
-            toolCollection.add(stool);
-            toolCollection.add(ftool);
-            toolCollection.add(etool);
-            toolCollection.add(gtool);
+            //toolCollection.add(stool);
+            //toolCollection.add(ftool);
+            //toolCollection.add(etool);
+            //toolCollection.add(gtool);
 
 
             //toolCollection.add(stool);
@@ -69,12 +69,12 @@ namespace ToolLibrary {
             //toolCollection.add(etool);
             //toolCollection.add(gtool);
             //toolCollection.add(htool);
-            TLS.borrowTool(firstMember, stool);
-            TLS.borrowTool(firstMember, ftool);
-            TLS.borrowTool(firstMember, etool);
+            //TLS.borrowTool(firstMember, stool);
+            //TLS.borrowTool(firstMember, ftool);
+            //TLS.borrowTool(firstMember, etool);
             //TLS.borrowTool(firstMember, gtool);
-            TLS.displayBorrowingTools(firstMember);
-            Console.ReadKey();
+            //TLS.displayBorrowingTools(firstMember);
+            //Console.ReadKey();
             //TLS.borrowTool(secondMember, ftool);
             //TLS.borrowTool(thirdMember, ftool);
             //TLS.borrowTool(thirdMember, ftool);
@@ -154,6 +154,9 @@ namespace ToolLibrary {
                             if (member.staffLogin(user, pass))
                             {
                                 StaffLoggedIn = true;
+                            } else
+                            {
+                                Console.WriteLine("\nIncorrect staff login details, returning to main menu");
                             }
 
                             //Staff logged in successfully
@@ -172,7 +175,7 @@ namespace ToolLibrary {
                                         UI.StaffMenuInterface();
                                     }
                                 }
-                            }
+                            } 
 
                             break;
                         case '2':
@@ -190,7 +193,6 @@ namespace ToolLibrary {
                             {
                                 MemberLoggedIn = true;
                             }
-                            MemberLoggedIn = true; //TESTING ONLY
 
                             //Member logged in successfully
                             if (MemberLoggedIn)
@@ -209,19 +211,17 @@ namespace ToolLibrary {
                                     }
                                 }
                             }
-
                             break;
                         case '0':
                             break;
                     }
 
-                    Console.Clear();
-                    Console.WriteLine("FINAL WINDOW");
-                    Console.ReadKey();
-                    break;
+                    if(charInput == '0')
+                    {
+                        break;
+                    }
                 }
             }
-            
         } 
     }
 }

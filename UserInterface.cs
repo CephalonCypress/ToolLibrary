@@ -18,11 +18,6 @@ namespace ToolLibrary
         Member[] members = new Member[0];
         Tool[] toolArray = new Tool[] { };
 
-        //IBSTree BSTree = memberCollection.getBST();
-        //Member currentMember;
-
-        //int selectedCategory;
-        //int selectedType;
         Tool.toolCategory selectedCategoryEnum = Tool.toolCategory.Gardening;
         Tool.toolType selectedTypeEnum = Tool.toolType.airCompressors;
         (Tool.toolCategory, Tool.toolType) selectedCategoryAndType = (Tool.toolCategory.Automotive, Tool.toolType.airCompressors);
@@ -39,9 +34,10 @@ namespace ToolLibrary
         public UserInterface()
         {
             //TESTING ONLY
-            Tool dtool = new Tool(Tool.toolCategory.Painting, Tool.toolType.sanding, "Gardening Tool", 1);
-            Tool ftool = new Tool(Tool.toolCategory.Painting, Tool.toolType.sanding, "Garden Tool", 2);
-            Tool etool = new Tool(Tool.toolCategory.Painting, Tool.toolType.sanding, "Gardens Tool", 3);
+            Tool dtool = new Tool(Tool.toolCategory.Measuring, Tool.toolType.temperatureHumidityTools, "Thermometer 5000", 10);
+            Tool ftool = new Tool(Tool.toolCategory.Measuring, Tool.toolType.temperatureHumidityTools, "Humidifer 4000", 12);
+            Tool etool = new Tool(Tool.toolCategory.Measuring, Tool.toolType.temperatureHumidityTools, "Rectal Thermometer 8000", 14);
+
             toolCollection.add(dtool);
             toolCollection.add(ftool);
             toolCollection.add(etool);
@@ -363,7 +359,7 @@ namespace ToolLibrary
             Console.WriteLine("\t5. Remove a member");
             Console.WriteLine("\t6. Find a contact number of a member");
             Console.WriteLine("\t0. Return to main menu");
-            Console.WriteLine("==========================================");
+            Console.WriteLine("\t==========================================");
             Console.WriteLine("Please make a selection (1-6, or 0 to return to main menu): \n");
 
             charInput = takeCharInput(2);
@@ -372,7 +368,8 @@ namespace ToolLibrary
             switch (charInput)
             {
                 case '1': // Add new tool to the system
-                    Console.WriteLine("\t================Staff Menu================");
+                    Console.WriteLine("\t==========================================");
+                    Console.WriteLine("\t--------Staff Menu - Adding a Tool--------");
                     Console.WriteLine("Select the category of the tool (1-9 or 0 to return to main menu)");
                     displayToolCategories();
                     charInput = takeCharInput(9);
@@ -381,6 +378,7 @@ namespace ToolLibrary
                     selectedCategoryAndType = chooseToolType(charInput);
                     selectedCategoryEnum = selectedCategoryAndType.Item1;
                     selectedTypeEnum = selectedCategoryAndType.Item2;
+
                     //Console.Clear();
 
                     Console.WriteLine("What is the name of the tool?");
@@ -389,10 +387,12 @@ namespace ToolLibrary
                     int toolQuantity = intInput();
 
                     toolCollection.add(new Tool(selectedCategoryEnum, selectedTypeEnum, toolName, toolQuantity));
-
+                    Console.WriteLine("\n" + toolQuantity + " " + toolName + "(s) added successfully");
+                    Console.ReadKey();
                     return true;
                 case '2': // INCREASE QUANTITY
-                    Console.WriteLine("\t================Staff Menu================");
+                    Console.WriteLine("\t=================================================");
+                    Console.WriteLine("\t------Staff Menu - Adding pieces of a Tool-------");
                     Console.WriteLine("Select the category of the tool (1-9 or 0 to return to main menu)");
                     displayToolCategories();
                     charInput = takeCharInput(9);
@@ -425,9 +425,13 @@ namespace ToolLibrary
                     Tool desiredTool = new Tool(selectedCategoryEnum, selectedTypeEnum, toolArray[intinput - 1].Name, toolArray[intinput - 1].Quantity); 
 
                     TLS.add(desiredTool, quantityToAdd, toolsOfSpecifiedTypeArray);
+                    Console.WriteLine(desiredTool.Name + " quantity successfully updated");
+                    TLS.displayTools(selectedTypeEnum.ToString(), toolsOfSpecifiedTypeArray);
+                    Console.ReadKey();
                     return true;
                 case '3': // DECREASE QUANTITY
-                    Console.WriteLine("\t================Staff Menu================");
+                    Console.WriteLine("\t=================================================");
+                    Console.WriteLine("\t------Staff Menu - Removing pieces of a Tool-----");
                     Console.WriteLine("Select the category of the tool (1-9 or 0 to return to main menu)");
                     displayToolCategories();
                     charInput = takeCharInput(9);
@@ -460,9 +464,15 @@ namespace ToolLibrary
                     desiredTool = new Tool(selectedCategoryEnum, selectedTypeEnum, toolArray[intinput - 1].Name, toolArray[intinput - 1].Quantity);
 
                     TLS.delete(desiredTool, quantityToRemove, toolsOfSpecifiedTypeArray);
+                    Console.WriteLine(desiredTool.Name + " quantity successfully updated");
+                    TLS.displayTools(selectedTypeEnum.ToString(), toolsOfSpecifiedTypeArray);
+
+                    Console.ReadKey();
                     return true;
                 case '4': //Register a member
-                    Console.WriteLine("\t================Staff Menu================");
+                    Console.WriteLine("\t=================================================");
+                    Console.WriteLine("\t-----------Staff Menu - Adding a Member----------");
+
                     Console.WriteLine("Details of the member to be added");
                     Console.Write("First name: ");
                     firstName = Console.ReadLine();
@@ -474,10 +484,13 @@ namespace ToolLibrary
                     PIN = Console.ReadLine();
 
                     memberCollection.add(new Member(firstName, lastName, contactNumber, PIN));
+                    Console.WriteLine("\n" + firstName + " " + lastName + " added successfully");
+                    Console.ReadKey();
                     return true;
 
                 case '5': // Remove a member
-                    Console.WriteLine("\t================Staff Menu================");
+                    Console.WriteLine("\t=================================================");
+                    Console.WriteLine("\t----------Staff Menu - Removing a Member---------");
                     Console.WriteLine("Details of the member to be removed");
                     Console.Write("First name: ");
                     firstName = Console.ReadLine();
@@ -489,10 +502,13 @@ namespace ToolLibrary
                     PIN = Console.ReadLine();
 
                     memberCollection.delete(new Member(firstName, lastName, contactNumber, PIN));
+                    Console.WriteLine("\n" + firstName + " " + lastName + " removed successfully");
+                    Console.ReadKey();
                     return true;
 
                 case '6': //Find the contact number of a member
-                    Console.WriteLine("\t================Staff Menu================");
+                    Console.WriteLine("\t=================================================");
+                    Console.WriteLine("\t----------Staff Menu - Search a Member-----------");
                     Console.WriteLine("Details of the member to be searched");
                     Console.Write("First name: ");
                     firstName = Console.ReadLine();
@@ -507,7 +523,6 @@ namespace ToolLibrary
                         Console.WriteLine(firstName + " " + lastName + "'s contact number is " + memberCollection.searchMember(firstName, lastName));
                     }
 
-                    Console.WriteLine("Press any key to continue");
                     Console.ReadKey();
                     return true;
                 case '0': // Return to main menu
@@ -537,6 +552,8 @@ namespace ToolLibrary
             {
                 case '1': // Display tools of a tool type
                     Console.Clear();
+                    Console.WriteLine("\t=================================================");
+                    Console.WriteLine("\t-----------Member Menu - Showing Tools-----------");
                     Console.WriteLine("Please make a selection (1-9, or 0 to return to main menu):");
                     displayToolCategories();
                     charInput = takeCharInput(9);
@@ -550,21 +567,21 @@ namespace ToolLibrary
 
                     Console.WriteLine("Press any key to continue");
                     Console.ReadKey();
-                    
                     return true;
 
                 case '2': // Borrow a tool
                     Console.Clear();
-
+                    Console.WriteLine("\t=================================================");
+                    Console.WriteLine("\t---------Member Menu - Borrowing A Tool----------");
                     Tool[] toolsOfSpecifiedTypeArray = new Tool[] { };
                     Console.WriteLine("Please make a selection (1-9):");
                     displayToolCategories();
                     charInput = takeCharInput(9);
                     int selectedToolIndex = -1;
+                    Tool desiredTool = new Tool();
                     selectedCategoryAndType = chooseToolType(charInput);
                     selectedCategoryEnum = selectedCategoryAndType.Item1;
                     selectedTypeEnum = selectedCategoryAndType.Item2;
-
 
                     toolArray = toolCollection.toArray();
                     int index = 0;
@@ -580,49 +597,99 @@ namespace ToolLibrary
                     }
 
                     TLS.displayTools(selectedTypeEnum.ToString(), toolsOfSpecifiedTypeArray);
+                    if(toolsOfSpecifiedTypeArray.Length == 0)
+                    {
+                        Console.WriteLine("There are no tools of that tool type");
+                        Console.ReadKey();
+                        return true;
+                    } else
+                    {
+                        charInput = takeCharInput(toolArray.Length);
+
+                        if (Convert.ToInt32(charInput.ToString()) - 1 > toolsOfSpecifiedTypeArray.Length)
+                        {
+                            Console.WriteLine("Invalid input, try a lower number");
+                        }
+                        else
+                        {
+                            selectedToolIndex = Convert.ToInt32(charInput.ToString()) - 1;
+                        }
+                        desiredTool = new Tool(selectedCategoryEnum,
+                            selectedTypeEnum,
+                            toolsOfSpecifiedTypeArray[selectedToolIndex].Name,
+                            toolsOfSpecifiedTypeArray[selectedToolIndex].Quantity,
+                            toolsOfSpecifiedTypeArray[selectedToolIndex].AvailableQuantity--,
+                            toolsOfSpecifiedTypeArray[selectedToolIndex].timesBorrowed++
+                            );
+                        TLS.borrowTool(currentMember, desiredTool);
+                        Console.WriteLine("You have successfully borrowed the " + desiredTool.Name + " tool");
+                        Console.ReadKey();
+                        return true;
+                    }
+                case '3': // Returning a tool
+                    Console.Clear();
+                    Console.WriteLine("\t=================================================");
+                    Console.WriteLine("\t---------Member Menu - Returning A Tool----------");
+                    Console.WriteLine("What is the category of the tool you would like to return?");
+                    toolsOfSpecifiedTypeArray = new Tool[] { };
+                    Console.WriteLine("Please make a selection (1-9):");
+                    displayToolCategories();
+                    charInput = takeCharInput(9);
+                    selectedToolIndex = -1;
+                    selectedCategoryAndType = chooseToolType(charInput);
+                    selectedCategoryEnum = selectedCategoryAndType.Item1;
+                    selectedTypeEnum = selectedCategoryAndType.Item2;
+
+
+                    toolArray = toolCollection.toArray();
+                    index = 0;
+
+                    foreach (Tool toolInArray in toolArray)
+                    {
+                        if (toolInArray.Type == selectedTypeEnum)
+                        {
+                            Array.Resize<Tool>(ref toolsOfSpecifiedTypeArray, toolsOfSpecifiedTypeArray.Length + 1);
+                            toolsOfSpecifiedTypeArray[toolsOfSpecifiedTypeArray.Length - 1] = toolInArray;
+                            index++;
+                        }
+                    }
+
+                    TLS.displayTools(selectedTypeEnum.ToString(), toolsOfSpecifiedTypeArray);
                     charInput = takeCharInput(toolArray.Length);
-                    
-                    if(Convert.ToInt32(charInput.ToString()) - 1 > toolsOfSpecifiedTypeArray.Length)
+
+                    if (Convert.ToInt32(charInput.ToString()) - 1 > toolsOfSpecifiedTypeArray.Length)
                     {
                         Console.WriteLine("Invalid input, try a lower number");
-                    } else
+                    }
+                    else
                     {
                         selectedToolIndex = Convert.ToInt32(charInput.ToString()) - 1;
                     }
-                    Tool desiredTool = new Tool(selectedCategoryEnum, 
-                        selectedTypeEnum, 
-                        toolsOfSpecifiedTypeArray[selectedToolIndex].Name,
-                        toolsOfSpecifiedTypeArray[selectedToolIndex].Quantity,
-                        toolsOfSpecifiedTypeArray[selectedToolIndex].AvailableQuantity,
-                        toolsOfSpecifiedTypeArray[selectedToolIndex].timesBorrowed++
-                        );
-                    TLS.borrowTool(currentMember, desiredTool);
+                    desiredTool = new Tool(selectedCategoryEnum, selectedTypeEnum, toolsOfSpecifiedTypeArray[selectedToolIndex].Name);
+
+                    TLS.returnTool(currentMember, desiredTool);
+                    Console.WriteLine(desiredTool.Name + " successfully returned");
                     Console.ReadKey();
-                    return true;
-
-                case '3': // Returning a tool
-                    Console.WriteLine("Which tool would you like to return?");
-                    TLS.displayBorrowingTools(currentMember);
-
-                    Console.ReadKey();
-
                     return true;
                 case '4': // List all the tools that I am renting
+                    Console.Clear();
+                    Console.WriteLine("\t=========================================================================================");
+                    Console.WriteLine("\t-----------------------------Member Menu - Listing Borrowed Tools------------------------");
                     TLS.displayBorrowingTools(currentMember);
 
-                    Console.WriteLine("Press any key to continue");
                     Console.ReadKey(); 
                     return true;
                 case '5': // Display top three (3) most frequently rented tools
+                    Console.Clear();
+                    Console.WriteLine("\t=============================================================================================");
+                    Console.WriteLine("\t----------------------------Member Menu - Frequently Rented Tools----------------------------");
                     toolArray = toolCollection.toArray();
                     TLS.displayTopThree(toolArray);
-                    Console.WriteLine("Press any key to continue");
                     Console.ReadKey();
                     return true;
                 case '0':
                     return false;
             }
-
             return false;
         }
     }

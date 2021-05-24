@@ -152,15 +152,7 @@ namespace ToolLibrary
             }
             // For each entry in the Array of loaned tools, match the index of rented tools
             // to the index of the ones being rented by the user and then print to Console
-            Console.Clear();
-
-            displayBorrowingToolsString += "\t===========================================================================\r\n";
-            displayBorrowingToolsString += "\t------------------------Member Menu - Displaying Borrowed Tools------------\r\n";
-            displayBorrowingToolsString += "\t|Category            |Type           |Name                |No. Available  |\r\n";
-
-            //Console.WriteLine("\t=============================================================");
-            //Console.WriteLine("\t=======================Member Menu===========================");
-            //Console.WriteLine("\tCategory \t\t Type \t\t Name");
+            displayBorrowingToolsString += "\t|Category            |Type                    |Name                     |No. Available  |\r\n";
             foreach (DictionaryEntry element in toolsLoanedArray)
             {
                 foreach (int indexedTool in indexOfRentedToolsList)
@@ -168,20 +160,15 @@ namespace ToolLibrary
                     if (element.Key.ToString() == indexedTool.ToString())
                     {
                         Tool tool = (Tool)element.Value;
-                        displayBorrowingToolsString += String.Format("\t|{0, -20}|{1, -15}|{2, -20}|{3, -15}|\r\n",
+                        displayBorrowingToolsString += String.Format("\t|{0, -20}|{1, -20}|{2, -25}|{3, -15}|\r\n",
                             tool.Category.ToString(),
                             tool.Type,
                             tool.Name,
                             tool.AvailableQuantity);
-                        //Console.WriteLine("\t" + tool.Category.ToString() + "\t\t" + 
-                        //    tool.Type + "\t\t" +
-                        //    tool.Name + "\t\t" +
-                        //    tool.timesBorrowed + "\t\t" +
-                        //    tool.AvailableQuantity);
                     }
                 }
             }
-            displayBorrowingToolsString += "\t===========================================================================\r\n";
+            displayBorrowingToolsString += "\t=========================================================================================\r\n";
             Console.WriteLine(displayBorrowingToolsString);
 
         }
@@ -190,20 +177,26 @@ namespace ToolLibrary
         // MODIFIED METHOD TO PASS TOOL ARRAY
         public void displayTools(string toolType, Tool[] displaytoolArray)
         {
-            Console.WriteLine("\t\t\t Tool Type List of Tools");
-            Console.WriteLine("\t================================================================================");
-            Console.WriteLine("\t\t Tool Name \t\t\t\t Available \t Total");
+            String displayToolsString = "";
+            displayToolsString += "\t======================================================================\r\n";
+            displayToolsString += "\t--------------------------Tool List of Tools Type---------------------\r\n";
+            displayToolsString += "\t|Tool No.  |Tool Name                |No. Available  |Total Quantity |\r\n";
             int index = 1;
 
             foreach (Tool toolInArray in displaytoolArray)
             {
                 if(toolInArray.Type.ToString() == toolType)
                 {
-                    Console.WriteLine(index + ".\t\t" + toolInArray.Name + "\t\t\t\t" + toolInArray.AvailableQuantity + "\t" + toolInArray.Quantity);
+                    displayToolsString += String.Format("\t|{0, -10}|{1, -25}|{2, -15}|{3, -15}|\r\n",
+                        index,
+                        toolInArray.Name,
+                        toolInArray.AvailableQuantity,
+                        toolInArray.Quantity);
                     index++;
                 }
             }
-            Console.WriteLine("\t================================================================================");
+            displayToolsString += "\t======================================================================\r\n";
+            Console.WriteLine(displayToolsString);
         }
 
         public void borrowTool(Member member, Tool tool)
@@ -237,7 +230,7 @@ namespace ToolLibrary
                     memberIndex = memberLoanHT.Count - 1;
                     foreach (Tool indexedTool in toolLoanHT.Values)
                     {
-                        if (indexedTool.Category != returnedTool.Category || indexedTool.Type != returnedTool.Type)
+                        if (indexedTool.Category != returnedTool.Category || indexedTool.Type != returnedTool.Type || indexedTool.Name != returnedTool.Name)
                         {
                             toolIndex--;
                             memberIndex--;
@@ -245,6 +238,7 @@ namespace ToolLibrary
                     }
                 }
             }
+            currentmember.toolsBorrowed--;
             tool.AvailableQuantity++;
             memberLoanHT.Remove(memberIndex);
             toolLoanHT.Remove(toolIndex);
@@ -300,16 +294,16 @@ namespace ToolLibrary
         public void displayTopThree(Tool[] toolArray)
         {
             //toolArray = toolCollection.toArray();
-            string displayTopThreeString;
+            string displayTopThreeString = "";
             heapSort(toolArray, toolArray.Length);
 
 
-            displayTopThreeString = "\t=========================================================================================\r\n";
-            displayTopThreeString += "\t|Category    |Type                |Name                     |Quantity  |Times Borrowed  |\r\n";
-            displayTopThreeString += "\t=========================================================================================\r\n";
+            displayTopThreeString += "\t=============================================================================================\r\n";
+            displayTopThreeString += "\t|Category    |Type                    |Name                     |Quantity  |Times Borrowed  |\r\n";
+            displayTopThreeString += "\t=============================================================================================\r\n";
             for(int i = 0; i < 3; i++)
             {
-                displayTopThreeString += String.Format("\t|{0, -12}|{1, -20}|{2, -25}|{3, -10}|{4, -16}|\r\n",
+                displayTopThreeString += String.Format("\t|{0, -12}|{1, -24}|{2, -25}|{3, -10}|{4, -16}|\r\n",
                     toolArray[i].Category,
                     toolArray[i].Type,
                     toolArray[i].Name,
